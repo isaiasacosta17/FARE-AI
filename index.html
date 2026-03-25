@@ -1,17 +1,525 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>FARE AI Analytics - Simulaciones Interactivas</title>    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Predicteer Decisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#07080f;--surface:#0f1018;--surface2:#161820;--surface3:#1d2030;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
+  --text:#dde1f0;--text2:#7b82a0;--text3:#454a62;
+  --accent:#2563eb;--accent2:#3b82f6;--acl:#93c5fd;--aglow:rgba(37,99,235,0.2);
+  --rose:#f43f5e;--emerald:#10b981;--amber:#f59e0b;--violet:#8b5cf6;
+  --font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+.app{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{width:256px;min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100;}
+.sb-logo{padding:18px 16px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;}
+.lm{width:40px;height:40px;flex-shrink:0;background:#0a1220;border-radius:10px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(37,99,235,0.3);box-shadow:0 0 18px rgba(37,99,235,0.15);}
+.lt .ln{font-size:13px;font-weight:700;color:var(--text);letter-spacing:0.5px;}
+.lt .ls{font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:1px;}
+.sb-client{padding:10px 12px;border-bottom:1px solid var(--border);}
+.slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:7px;padding:0 2px;}
+.ctrig{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--text);font-family:var(--font);font-size:12px;font-weight:500;transition:border-color 0.2s;position:relative;}
+.ctrig:hover{border-color:var(--border2);}
+.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.caret{margin-left:auto;color:var(--text3);font-size:9px;transition:transform 0.2s;}
+.cdrop{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface2);border:1px solid var(--border2);border-radius:11px;z-index:300;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.6);display:none;}
+.cdrop.open{display:block;}
+.copt{padding:10px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:background 0.15s;}
+.copt:hover{background:rgba(255,255,255,0.03);}
+.copt.sel{background:rgba(37,99,235,0.08);}
+.con{font-size:12px;font-weight:500;color:var(--text);}
+.cot{font-size:10px;color:var(--text3);margin-top:1px;}
+.sb-nav{flex:1;padding:10px;}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--text2);font-size:12px;font-weight:500;transition:all 0.15s;margin-bottom:2px;}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text);}
+.ni.active{background:rgba(37,99,235,0.1);color:var(--acl);}
+.nicon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:rgba(255,255,255,0.03);}
+.ni.active .nicon{background:rgba(37,99,235,0.15);}
+.nmeta{flex:1;}
+.ndesc{font-size:10px;color:var(--text3);margin-top:1px;font-weight:400;}
+.nchip{font-size:9px;font-family:var(--mono);background:rgba(37,99,235,0.15);color:var(--acl);padding:2px 6px;border-radius:4px;}
+
+/* MAIN */
+.main{margin-left:256px;flex:1;}
+.page{display:none;padding:28px 32px;max-width:1080px;}
+.page.active{display:block;}
+.ph{margin-bottom:26px;}
+.phey{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:8px;}
+.phey::before{content:'';width:14px;height:1px;background:var(--text3);}
+.pht{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;}
+.phs{font-size:13px;color:var(--text2);margin-top:5px;line-height:1.6;}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:20px;}
+.ctitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text3);margin-bottom:14px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.sv{font-size:26px;font-weight:700;letter-spacing:-1px;}
+.sl{font-size:11px;color:var(--text3);margin-top:3px;}
+.pos{color:var(--emerald);}
+.neg{color:var(--rose);}
+
+/* Form */
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px;}
+.fr.w1{grid-template-columns:1fr;}
+.fg label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--text3);margin-bottom:5px;}
+.fg input,.fg select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 11px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);}
+.fg select option{background:var(--surface2);}
+.rh{display:flex;justify-content:space-between;align-items:center;}
+.rv{font-size:11px;font-family:var(--mono);color:var(--acl);}
+input[type=range]{width:100%;-webkit-appearance:none;height:3px;background:var(--surface3);border-radius:2px;outline:none;border:none;padding:0;margin-top:8px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--accent2);cursor:pointer;}
+.btn{background:var(--accent);color:white;border:none;border-radius:9px;padding:11px 18px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:4px;transition:opacity 0.2s,transform 0.1s;box-shadow:0 4px 20px var(--aglow);}
+.btn:hover{opacity:0.88;}
+.btn:active{transform:scale(0.98);}
+
+/* Pred layout */
+.pl{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start;}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;color:var(--text3);text-align:center;gap:10px;}
+.empty-i{font-size:36px;opacity:0.25;}
+.empty p{font-size:12px;max-width:200px;line-height:1.6;}
+
+/* Gauge */
+.gw{display:flex;flex-direction:column;align-items:center;padding:16px 0 8px;}
+.gnum{font-size:42px;font-weight:800;letter-spacing:-2px;margin-top:-6px;}
+.gsub{font-size:11px;color:var(--text3);margin-top:2px;}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;}
+.tr{background:rgba(244,63,94,0.1);color:var(--rose);}
+.te{background:rgba(16,185,129,0.1);color:var(--emerald);}
+.ta{background:rgba(245,158,11,0.1);color:var(--amber);}
+.tb{background:rgba(59,130,246,0.1);color:var(--accent2);}
+
+/* Factor bars */
+.fb{margin-bottom:10px;}
+.fbh{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:11px;}
+.fbn{color:var(--text2);}
+.fbp{font-family:var(--mono);color:var(--text3);font-size:10px;}
+.fbt{height:3px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;}
+.fbf{height:100%;border-radius:2px;transition:width 0.8s cubic-bezier(.4,0,.2,1);}
+
+/* Recs */
+.rec{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border);margin-bottom:8px;transition:border-color 0.2s;}
+.rec:hover{border-color:var(--border2);}
+.ri{font-size:16px;flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04);border-radius:7px;}
+.rb{flex:1;}
+.ra{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.rd{font-size:11px;color:var(--text2);line-height:1.55;}
+
+/* AI block */
+.aib{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(139,92,246,0.04));border:1px solid rgba(37,99,235,0.18);border-radius:12px;padding:15px;margin-top:10px;}
+.aih{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.aibadge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--acl);background:rgba(37,99,235,0.15);padding:3px 8px;border-radius:20px;}
+.ait{font-size:12px;color:var(--text2);line-height:1.65;}
+.ait b{color:var(--acl);font-weight:600;}
+.aitools{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;}
+.aichip{font-size:10px;font-family:var(--mono);padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.04);color:var(--text3);border:1px solid var(--border);cursor:default;transition:all 0.15s;}
+.aichip:hover{border-color:var(--accent);color:var(--acl);}
+.ail{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);}
+
+/* Banner */
+.banner{background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(139,92,246,0.05));border:1px solid rgba(37,99,235,0.15);border-radius:15px;padding:24px 28px;margin-bottom:22px;position:relative;overflow:hidden;}
+.banner::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(37,99,235,0.1),transparent 70%);border-radius:50%;}
+.bclabel{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:20px;padding:3px 11px 3px 5px;font-size:11px;color:var(--text2);margin-bottom:10px;}
+.bh{font-size:19px;font-weight:700;letter-spacing:-0.4px;}
+.bp{font-size:12px;color:var(--text2);margin-top:4px;}
+.mgi{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:9px;padding:12px 14px;text-align:center;}
+.mgv{font-size:20px;font-weight:700;font-family:var(--mono);}
+.mgl{font-size:10px;color:var(--text3);margin-top:2px;}
+.mgt{font-size:9px;font-family:var(--mono);color:var(--emerald);background:rgba(16,185,129,0.08);padding:2px 7px;border-radius:4px;margin-top:4px;display:inline-block;}
+
+/* Quick cards */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all 0.2s;}
+.qcard:hover{border-color:var(--border2);transform:translateY(-1px);}
+.qi{font-size:20px;margin-bottom:8px;}
+.qt{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.qd{font-size:11px;color:var(--text3);line-height:1.5;}
+.div{height:1px;background:var(--border);margin:14px 0;}
+
+/* Dot animation */
+@keyframes dp{0%,80%,100%{opacity:0}40%{opacity:1}}
+.da span{animation:dp 1.4s infinite;opacity:0;}
+.da span:nth-child(2){animation-delay:0.2s;}
+.da span:nth-child(3){animation-delay:0.4s;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="lm">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M13 2 L24 13 L13 24 L2 13 Z" stroke="#2563eb" stroke-width="1.4" fill="none"/>
+        <path d="M13 6.5 L19.5 13 L13 19.5 L6.5 13 Z" stroke="#60a5fa" stroke-width="1" fill="none" opacity="0.55"/>
+        <line x1="13" y1="18" x2="13" y2="8" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+        <polyline points="10,11 13,8 16,11" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="lt">
+      <div class="ln">PREDICTEER</div>
+      <div class="ls">PREDICT · STEER · EXECUTE</div>
+    </div>
+  </div>
+
+  <div class="sb-client">
+    <div class="slbl">Cliente activo</div>
+    <div class="ctrig" id="ctrig" onclick="toggleC()">
+      <div class="cdot" id="adot" style="background:#2563eb"></div>
+      <span id="aname">Demo · Retail S.A.</span>
+      <span class="caret" id="caret">▾</span>
+      <div class="cdrop" id="cdrop">
+        <div class="copt sel" onclick="pickC(0,event)">
+          <div style="width:7px;height:7px;border-radius:50%;background:#2563eb;flex-shrink:0"></div>
+          <div><div class="con">Demo · Retail S.A.</div><div class="cot">Churn · Demo</div></div>
+        </div>
+        <div class="copt" onclick="pickC(1,event)">
+          <div style="width:7px;height:7px;border-radius:50%;background:#10b981;flex-shrink:0"></div>
+          <div><div class="con">Éxito · E-commerce</div><div class="cot">Forecast · Activo</div></div>
+        </div>
+        <div class="copt" onclick="pickC(2,event)">
+          <div style="width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+          <div><div class="con">Bancolombia · B2B</div><div class="cot">Leads · Activo</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="slbl" style="padding:4px 8px 7px;">Módulos</div>
+    <div class="ni active" id="ni-home" onclick="showP('home')">
+      <div class="nicon">⬡</div>
+      <div class="nmeta"><div>Dashboard</div><div class="ndesc">Resumen del cliente</div></div>
+    </div>
+    <div class="ni" id="ni-churn" onclick="showP('churn')">
+      <div class="nicon">📉</div>
+      <div class="nmeta"><div>Churn</div><div class="ndesc">Predicción de abandono</div></div>
+      <span class="nchip">RF</span>
+    </div>
+    <div class="ni" id="ni-ventas" onclick="showP('ventas')">
+      <div class="nicon">📈</div>
+      <div class="nmeta"><div>Ventas</div><div class="ndesc">Forecast de ingresos</div></div>
+      <span class="nchip">XGB</span>
+    </div>
+    <div class="ni" id="ni-leads" onclick="showP('leads')">
+      <div class="nicon">🎯</div>
+      <div class="nmeta"><div>Leads</div><div class="ndesc">Priorización B2B</div></div>
+      <span class="nchip">LR</span>
+    </div>
+  </nav>
+</aside>
+
+<main class="main">
+
+<!-- HOME -->
+<section class="page active" id="page-home">
+  <div class="ph">
+    <div class="phey">Dashboard</div>
+    <div class="pht" id="ht">Demo · Retail S.A.</div>
+    <div class="phs" id="hs">Empresa de retail con modelo de predicción de churn activo. Última actualización: marzo 2026.</div>
+  </div>
+  <div class="banner">
+    <div class="bclabel">
+      <div class="cdot" id="bdot" style="background:#2563eb"></div>
+      <span id="bcn">Demo · Retail S.A.</span>
+    </div>
+    <div class="bh" id="bh">Modelo activo: Predicción de Churn</div>
+    <div class="bp" id="bp">Random Forest entrenado con 12.400 registros históricos. Accuracy 87% en test set.</div>
+    <div class="g4" id="mgrid" style="margin-top:18px;">
+      <div class="mgi"><div class="mgv">87%</div><div class="mgl">Accuracy</div><div class="mgt">test set</div></div>
+      <div class="mgi"><div class="mgv">0.91</div><div class="mgl">AUC-ROC</div><div class="mgt">binario</div></div>
+      <div class="mgi"><div class="mgv">12.4k</div><div class="mgl">Registros</div><div class="mgt">train</div></div>
+      <div class="mgi"><div class="mgv">9</div><div class="mgl">Variables</div><div class="mgt">features</div></div>
+    </div>
+  </div>
+  <div class="ctitle" style="padding:0 2px;margin-bottom:12px;">Ir a simulación</div>
+  <div class="g3" style="margin-bottom:20px;">
+    <div class="qcard" onclick="showP('churn')"><div class="qi">📉</div><div class="qt">Predicción de Churn</div><div class="qd">Identifica clientes a punto de abandonar y activa retención a tiempo</div></div>
+    <div class="qcard" onclick="showP('ventas')"><div class="qi">📈</div><div class="qt">Forecast de Ventas</div><div class="qd">Predice ingresos del próximo mes para planificar recursos e inventario</div></div>
+    <div class="qcard" onclick="showP('leads')"><div class="qi">🎯</div><div class="qt">Priorización de Leads</div><div class="qd">Califica leads B2B y enfoca el equipo en los de mayor probabilidad</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">Proceso Predicteer</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.7;">Entrenamos modelos con los datos limpios de cada empresa. El proceso incluye EDA con YData Profiling, limpieza, feature engineering, partición train/test, selección del mejor modelo y despliegue de este portal. Cada mes actualizamos el modelo con nuevos datos.</p>
+    <div class="div"></div>
+    <div class="g3">
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--acl);">01</div><div style="font-size:11px;color:var(--text3);margin-top:3px;">EDA + Limpieza</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--acl);">02</div><div style="font-size:11px;color:var(--text3);margin-top:3px;">Train + Evaluar</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--acl);">03</div><div style="font-size:11px;color:var(--text3);margin-top:3px;">Desplegar + Actualizar</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHURN -->
+<section class="page" id="page-churn">
+  <div class="ph">
+    <div class="phey">Churn</div>
+    <div class="pht">Predicción de Abandono</div>
+    <div class="phs" id="csub">Empresa de retail. El modelo identifica qué clientes están a punto de dejar de comprar para activar retención a tiempo.</div>
+  </div>
+  <div class="pl">
+    <div class="card">
+      <div class="ctitle">Datos del cliente</div>
+      <div class="fr"><div class="fg"><label>Nombre</label><input type="text" id="cn" placeholder="Ej: María García"/></div><div class="fg"><label>Meses sin comprar</label><input type="number" id="cm" value="3" min="0" max="24"/></div></div>
+      <div class="fr"><div class="fg"><label>Ticket promedio ($)</label><input type="number" id="ct" value="85000" min="0"/></div><div class="fg"><label>Quejas últimos 6 meses</label><input type="number" id="cq" value="1" min="0" max="10"/></div></div>
+      <div class="fr w1"><div class="fg"><label><div class="rh"><span>Satisfacción del cliente</span><span class="rv" id="sv">7/10</span></div></label><input type="range" id="cs" min="1" max="10" value="7" oninput="document.getElementById('sv').textContent=this.value+'/10'"/></div></div>
+      <div class="fr"><div class="fg"><label>Fidelización</label><select id="cf"><option value="si">Sí, inscrito</option><option value="no">No inscrito</option></select></div><div class="fg"><label>Canal principal</label><select id="cc"><option value="digital">Digital</option><option value="fisica">Física</option><option value="mixto">Mixto</option></select></div></div>
+      <button class="btn" onclick="runChurn()">⚡ Ejecutar Predicción</button>
+    </div>
+    <div id="cr"><div class="card empty"><div class="empty-i">📉</div><p>Completa los datos y ejecuta la predicción para ver el riesgo de abandono.</p></div></div>
+  </div>
+</section>
+
+<!-- VENTAS -->
+<section class="page" id="page-ventas">
+  <div class="ph">
+    <div class="phey">Forecast</div>
+    <div class="pht">Predicción de Ventas</div>
+    <div class="phs">Proyección del próximo mes basada en histórico, temporada y presupuesto de marketing.</div>
+  </div>
+  <div class="pl">
+    <div class="card">
+      <div class="ctitle">Parámetros del período</div>
+      <div class="fr"><div class="fg"><label>Ventas mes actual (unid.)</label><input type="number" id="va" value="1200"/></div><div class="fg"><label>Ventas mes anterior</label><input type="number" id="vb" value="1050"/></div></div>
+      <div class="fr"><div class="fg"><label>Precio promedio ($)</label><input type="number" id="vp" value="45000"/></div><div class="fg"><label>Temporada</label><select id="vt"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="baja">Baja</option></select></div></div>
+      <div class="fr w1"><div class="fg"><label><div class="rh"><span>Presupuesto marketing</span><span class="rv" id="mkv">$5.000.000</span></div></label><input type="range" id="vm" min="0" max="20000000" step="500000" value="5000000" oninput="document.getElementById('mkv').textContent='$'+parseInt(this.value).toLocaleString('es-CO')"/></div></div>
+      <div class="fr w1"><div class="fg"><label>Promoción activa</label><select id="vpr"><option value="si">Sí</option><option value="no">No</option></select></div></div>
+      <button class="btn" onclick="runVentas()">⚡ Generar Forecast</button>
+    </div>
+    <div id="vr"><div class="card empty"><div class="empty-i">📈</div><p>Ingresa los parámetros y genera el forecast de ventas.</p></div></div>
+  </div>
+</section>
+
+<!-- LEADS -->
+<section class="page" id="page-leads">
+  <div class="ph">
+    <div class="phey">Leads</div>
+    <div class="pht">Priorización de Leads B2B</div>
+    <div class="phs">Califica cada lead con probabilidad de cierre para enfocar el esfuerzo comercial donde más importa.</div>
+  </div>
+  <div class="pl">
+    <div class="card">
+      <div class="ctitle">Datos del lead</div>
+      <div class="fr"><div class="fg"><label>Nombre / Empresa</label><input type="text" id="ln" placeholder="Ej: Carlos Pérez"/></div><div class="fg"><label>Tamaño empresa</label><select id="ls"><option value="pyme">Pyme (−50)</option><option value="mediana">Mediana (50−250)</option><option value="grande">Grande (250+)</option></select></div></div>
+      <div class="fr"><div class="fg"><label>Industria</label><select id="li"><option value="retail">Retail</option><option value="salud">Salud</option><option value="fintech">Fintech</option><option value="educacion">Educación</option><option value="manufactura">Manufactura</option></select></div><div class="fg"><label>Canal de origen</label><select id="lc"><option value="inbound">Inbound</option><option value="outbound">Outbound</option><option value="referido">Referido</option></select></div></div>
+      <div class="fr w1"><div class="fg"><label><div class="rh"><span>Nivel de interacción</span><span class="rv" id="iv">7/10</span></div></label><input type="range" id="li2" min="1" max="10" value="7" oninput="document.getElementById('iv').textContent=this.value+'/10'"/></div></div>
+      <div class="fr"><div class="fg"><label>Tomador de decisión</label><select id="ld"><option value="si">Sí</option><option value="no">No</option></select></div><div class="fg"><label>Reuniones realizadas</label><input type="number" id="lm" value="2" min="0" max="20"/></div></div>
+      <button class="btn" onclick="runLeads()">⚡ Evaluar Lead</button>
+    </div>
+    <div id="lr"><div class="card empty"><div class="empty-i">🎯</div><p>Completa los datos y evalúa la probabilidad de conversión.</p></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+// CLIENT DATA
+const CLIENTS=[
+  {name:'Demo · Retail S.A.',dot:'#2563eb',bh:'Modelo activo: Predicción de Churn',bp:'Random Forest entrenado con 12.400 registros. Accuracy 87% en test set.',metrics:[{v:'87%',l:'Accuracy',t:'test set'},{v:'0.91',l:'AUC-ROC',t:'binario'},{v:'12.4k',l:'Registros',t:'train'},{v:'9',l:'Variables',t:'features'}],csub:'Empresa de retail. Modelo identifica clientes a punto de abandonar para activar retención.'},
+  {name:'Éxito · E-commerce',dot:'#10b981',bh:'Modelo activo: Forecast de Ventas',bp:'XGBoost entrenado con 36 meses de histórico. MAPE 4.2% en validación.',metrics:[{v:'95.8%',l:'Precisión',t:'MAPE 4.2%'},{v:'0.97',l:'R²',t:'regresión'},{v:'36m',l:'Histórico',t:'mensual'},{v:'11',l:'Variables',t:'features'}],csub:'E-commerce con modelo de forecast mensual de ventas activo.'},
+  {name:'Bancolombia · B2B',dot:'#f59e0b',bh:'Modelo activo: Priorización de Leads',bp:'Logistic Regression con feature engineering. AUC 0.88 en equipo comercial.',metrics:[{v:'82%',l:'Accuracy',t:'test set'},{v:'0.88',l:'AUC-ROC',t:'binario'},{v:'8.7k',l:'Leads',t:'train'},{v:'12',l:'Variables',t:'features'}],csub:'Equipo comercial B2B con modelo de scoring de leads activo.'}
+];
+let ac=0;
+
+function pickC(i,e){
+  e.stopPropagation();ac=i;
+  const c=CLIENTS[i];
+  document.getElementById('adot').style.background=c.dot;
+  document.getElementById('aname').textContent=c.name;
+  document.getElementById('bdot').style.background=c.dot;
+  document.getElementById('bcn').textContent=c.name;
+  document.getElementById('bh').textContent=c.bh;
+  document.getElementById('bp').textContent=c.bp;
+  document.getElementById('ht').textContent=c.name;
+  document.getElementById('hs').textContent=c.bp;
+  document.getElementById('csub').textContent=c.csub;
+  document.getElementById('mgrid').innerHTML=c.metrics.map(m=>`<div class="mgi"><div class="mgv">${m.v}</div><div class="mgl">${m.l}</div><div class="mgt">${m.t}</div></div>`).join('');
+  document.querySelectorAll('.copt').forEach((o,j)=>o.classList.toggle('sel',j===i));
+  toggleC();
+}
+
+function toggleC(){
+  const t=document.getElementById('ctrig'),d=document.getElementById('cdrop'),c=document.getElementById('caret');
+  const o=d.classList.toggle('open');
+  c.style.transform=o?'rotate(180deg)':'';
+}
+document.addEventListener('click',e=>{if(!document.getElementById('ctrig').contains(e.target)){document.getElementById('cdrop').classList.remove('open');document.getElementById('caret').style.transform='';}});
+
+function showP(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('ni-'+id).classList.add('active');
+}
+
+// GAUGE
+function gauge(pct,color){
+  const r=54,half=Math.PI*r,filled=half*(pct/100);
+  return `<svg width="140" height="84" viewBox="0 0 140 84"><path d="M16 70 A54 54 0 0 1 124 70" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10" stroke-linecap="round"/><path d="M16 70 A54 54 0 0 1 124 70" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${filled} ${half}"/></svg>`;
+}
+
+// AI via Claude API
+async function getAI(ctx,el){
+  const load=document.createElement('div');
+  load.className='ail';load.innerHTML='<div class="da"><span style="font-size:18px;line-height:1">·</span><span style="font-size:18px;line-height:1">·</span><span style="font-size:18px;line-height:1">·</span></div><span>Consultando IA&hellip;</span>';
+  el.appendChild(load);
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`Eres consultor de estrategia comercial y CRM. Dado este resultado de ML: ${ctx}\nDa recomendación práctica en 2-3 oraciones. Luego lista 3 herramientas de software reales (HubSpot, Salesforce, Braze, Klaviyo, ActiveCampaign, Pipedrive, Monday, Zoho, etc.) para implementar esa recomendación.\nJSON estricto sin texto extra:\n{"r":"...","h":[{"n":"...","u":"..."},{"n":"...","u":"..."},{"n":"...","u":"..."}]}`}]})});
+    const d=await r.json();
+    const txt=d.content[0].text.replace(/\`\`\`json|\`\`\`/g,'').trim();
+    const p=JSON.parse(txt);
+    load.remove();
+    el.innerHTML=`<p class="ait">${p.r}</p><div class="aitools">${p.h.map(h=>`<span class="aichip" title="${h.u}">🔧 ${h.n}</span>`).join('')}</div><div style="margin-top:8px;font-size:10px;color:var(--text3)">Pasa el cursor sobre cada herramienta para ver su uso.</div>`;
+  }catch(e){
+    load.remove();
+    el.innerHTML='<p class="ait" style="color:var(--text3)">No se pudo cargar la recomendación de IA.</p>';
+  }
+}
+
+function aiBlock(ctxStr){
+  return `<div class="aib"><div class="aih"><span class="aibadge">✦ IA</span><span style="font-size:11px;font-weight:600;color:var(--text2)">Recomendación estratégica + herramientas</span></div><div id="aiout_${Date.now()}"></div></div>`;
+}
+
+// CHURN
+function runChurn(){
+  const nom=document.getElementById('cn').value||'Cliente';
+  const mes=+document.getElementById('cm').value;
+  const tkt=+document.getElementById('ct').value;
+  const que=+document.getElementById('cq').value;
+  const sat=+document.getElementById('cs').value;
+  const fid=document.getElementById('cf').value;
+  const can=document.getElementById('cc').value;
+  let s=48+mes*4+que*8-sat*3+(fid==='no'?12:0)+(can==='digital'?-5:0)+(tkt>100000?-7:0)+(Math.random()*8-4);
+  const pct=Math.round(Math.min(95,Math.max(5,s)));
+  const risk=pct>=50;
+  const col=pct>=70?'#f43f5e':pct>=45?'#f59e0b':'#10b981';
+  const tc=pct>=70?'tr':pct>=45?'ta':'te';
+  const tl=pct>=70?'Alto riesgo':pct>=45?'Riesgo medio':'Bajo riesgo';
+  const ret=Math.max(20,100-pct);
+  const factors=[{n:'Tiempo sin comprar',p:Math.min(100,mes*8),c:'#f43f5e'},{n:'Quejas recientes',p:Math.min(100,que*15),c:'#f43f5e'},{n:'Satisfacción',p:sat*10,c:'#10b981'},{n:'Programa fidelización',p:fid==='si'?75:20,c:'#10b981'}];
+  const recs=risk?[{i:'💸',a:'Oferta de retención urgente',d:`Enviar descuento exclusivo del 20% a ${nom} en las próximas 48h.`},{i:'📞',a:'Llamada de satisfacción',d:'Agendar llamada con CX para identificar el punto de dolor.'},{i:'🎁',a:'Inscribir en programa premium',d:'Beneficios adicionales para reactivar compromiso con la marca.'}]:[{i:'📊',a:'Mantener nurturing regular',d:`${nom} está estable. Incluir en campaña mensual de valor.`},{i:'⬆️',a:'Oportunidad de upselling',d:'Perfil apto para oferta de producto complementario.'}];
+  const ctx=`Cliente ${nom}: ${mes} meses sin comprar, ${que} quejas, satisfacción ${sat}/10, fidelización ${fid}. Churn: ${pct}% (${tl}).`;
+  const uid='ai'+Date.now();
+  document.getElementById('cr').innerHTML=`
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div><div style="font-size:13px;font-weight:700">${nom}</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Resultado del modelo</div></div>
+        <span class="tag ${tc}">${tl}</span>
+      </div>
+      <div class="gw">${gauge(pct,col)}<div class="gnum" style="color:${col}">${pct}%</div><div class="gsub">Probabilidad de churn</div></div>
+      <div class="div"></div>
+      <div class="g2" style="margin-bottom:14px;">
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:20px">${ret}</div><div class="sl">Score retención /100</div></div>
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:18px">$${Math.round(tkt*12).toLocaleString('es-CO')}</div><div class="sl">LTV anual estimado</div></div>
+      </div>
+      <div class="ctitle">Factores del modelo</div>
+      ${factors.map(f=>`<div class="fb"><div class="fbh"><span class="fbn">${f.n}</span><span class="fbp">${f.p}%</span></div><div class="fbt"><div class="fbf" style="width:${f.p}%;background:${f.c}"></div></div></div>`).join('')}
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="ctitle">Acciones recomendadas</div>
+      ${recs.map(r=>`<div class="rec"><div class="ri">${r.i}</div><div class="rb"><div class="ra">${r.a}</div><div class="rd">${r.d}</div></div></div>`).join('')}
+    </div>
+    <div class="aib"><div class="aih"><span class="aibadge">✦ IA</span><span style="font-size:11px;font-weight:600;color:var(--text2)">Recomendación estratégica + herramientas</span></div><div id="${uid}"></div></div>`;
+  getAI(ctx,document.getElementById(uid));
+}
+
+// VENTAS
+function runVentas(){
+  const act=+document.getElementById('va').value;
+  const ant=+document.getElementById('vb').value;
+  const pre=+document.getElementById('vp').value;
+  const tmp=document.getElementById('vt').value;
+  const mkt=+document.getElementById('vm').value;
+  const pro=document.getElementById('vpr').value;
+  const trend=(act-ant)/Math.max(ant,1);
+  const mult=tmp==='alta'?1.3:tmp==='media'?1.05:0.88;
+  const pred=Math.round(act*(1+trend*0.6)*mult*(1+mkt/2e7*0.12)*(pro==='si'?1.18:1)+(Math.random()*16-8));
+  const rev=pred*pre;
+  const chg=Math.round((pred-act)/Math.max(act,1)*100);
+  const conf=Math.min(92,Math.max(68,83-Math.abs(trend)*14+(mkt>5e6?4:0)));
+  const months=[0,1,2].map(i=>({m:`Mes ${i+1}`,u:Math.round(pred*(1+i*0.04*(trend>0?1:-1))+(Math.random()*10-5))}));
+  const maxU=Math.max(...months.map(x=>x.u));
+  const ctx=`Forecast ventas: ${pred} unidades proyectadas (vs ${act} actuales, ${chg>0?'+':''}${chg}%). Temporada: ${tmp}, marketing: $${mkt.toLocaleString()}, promoción: ${pro}. Ingresos: $${rev.toLocaleString('es-CO')}.`;
+  const uid='ai'+Date.now();
+  document.getElementById('vr').innerHTML=`
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div><div style="font-size:13px;font-weight:700">Forecast próximo mes</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Confianza: ${Math.round(conf)}%</div></div>
+        <span class="tag ${chg>=0?'te':'tr'}">${chg>=0?'+':''}${chg}%</span>
+      </div>
+      <div style="text-align:center;padding:10px 0 14px">
+        <div style="font-size:42px;font-weight:800;letter-spacing:-2px">${pred.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--text3)">unidades proyectadas</div>
+        <div style="font-size:18px;font-weight:700;color:var(--emerald);margin-top:6px;font-family:var(--mono)">$${rev.toLocaleString('es-CO')}</div>
+        <div style="font-size:10px;color:var(--text3)">ingresos estimados</div>
+      </div>
+      <div class="div"></div>
+      <div class="ctitle">Proyección trimestral</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;height:72px;margin-bottom:8px">
+        ${months.map(m=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div style="width:100%;height:${Math.round(m.u/maxU*100)}%;background:rgba(37,99,235,0.45);border-radius:4px 4px 0 0;min-height:6px"></div></div><div style="font-size:9px;color:var(--text3);margin-top:4px;font-family:var(--mono)">${m.m}</div><div style="font-size:10px;font-weight:600;font-family:var(--mono);color:var(--text2)">${m.u.toLocaleString()}</div></div>`).join('')}
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:18px;color:${pro==='si'?'var(--emerald)':'var(--text3)'}">${pro==='si'?'+18%':'—'}</div><div class="sl">Impacto promoción</div></div>
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:18px;color:${tmp==='alta'?'var(--emerald)':tmp==='baja'?'var(--rose)':'var(--text3)'}">${tmp==='alta'?'+30%':tmp==='baja'?'-12%':'+5%'}</div><div class="sl">Factor temporada</div></div>
+      </div>
+    </div>
+    <div class="aib"><div class="aih"><span class="aibadge">✦ IA</span><span style="font-size:11px;font-weight:600;color:var(--text2)">Recomendación estratégica + herramientas</span></div><div id="${uid}"></div></div>`;
+  getAI(ctx,document.getElementById(uid));
+}
+
+// LEADS
+function runLeads(){
+  const nom=document.getElementById('ln').value||'Lead';
+  const siz=document.getElementById('ls').value;
+  const ind=document.getElementById('li').value;
+  const can=document.getElementById('lc').value;
+  const itr=+document.getElementById('li2').value;
+  const dec=document.getElementById('ld').value;
+  const mts=+document.getElementById('lm').value;
+  let s=28+(siz==='grande'?20:siz==='mediana'?12:0)+(can==='referido'?18:can==='inbound'?10:0)+(dec==='si'?15:0)+itr*3+mts*4+(ind==='fintech'||ind==='salud'?8:0)+(Math.random()*8-4);
+  const pct=Math.round(Math.min(97,Math.max(5,s)));
+  const tier=pct>=70?'Hot 🔥':pct>=45?'Warm 🌡':'Cold ❄';
+  const tc=pct>=70?'tr':pct>=45?'ta':'tb';
+  const col=pct>=70?'#f43f5e':pct>=45?'#f59e0b':'#3b82f6';
+  const acts=pct>=70?[{i:'🤝',a:'Propuesta inmediata',d:`Preparar propuesta personalizada para ${nom} con caso de éxito en ${ind}.`},{i:'👔',a:'Involucrar director comercial',d:'Escalar a liderazgo de ventas para cierre en próxima reunión.'}]:pct>=45?[{i:'📚',a:'Nutrir con casos de éxito',d:`Enviar 2-3 casos de empresas similares en ${ind}.`},{i:'📅',a:'Agendar demo técnica',d:'Proponer demo en los próximos 7 días para mantener el momentum.'}]:[{i:'⏳',a:'Re-evaluar en 30 días',d:`${nom} no está listo. Secuencia de nurturing automatizada.`},{i:'📧',a:'Email educativo mensual',d:'Newsletter con contenido de valor para educación del mercado.'}];
+  const ctx=`Lead ${nom}: empresa ${siz} en ${ind}, canal ${can}, interacción ${itr}/10, decisor: ${dec}, reuniones: ${mts}. Conversión: ${pct}% (${tier.replace(/[^a-zA-Z ]/g,'').trim()}).`;
+  const uid='ai'+Date.now();
+  document.getElementById('lr').innerHTML=`
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div><div style="font-size:13px;font-weight:700">${nom}</div><div style="font-size:10px;color:var(--text3);margin-top:2px">${ind} · ${siz}</div></div>
+        <span class="tag ${tc}">${tier}</span>
+      </div>
+      <div class="gw">${gauge(pct,col)}<div class="gnum" style="color:${col}">${pct}%</div><div class="gsub">Probabilidad de conversión</div></div>
+      <div class="div"></div>
+      <div class="g2" style="margin-bottom:14px">
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:20px">${dec==='si'?'✓':'✗'}</div><div class="sl">Tomador de decisión</div></div>
+        <div class="stat" style="padding:12px 14px"><div class="sv" style="font-size:20px">${mts}</div><div class="sl">Reuniones realizadas</div></div>
+      </div>
+      <div class="ctitle">Señales del lead</div>
+      ${[{n:'Interacción',p:itr*10,c:'#3b82f6'},{n:'Tamaño empresa',p:siz==='grande'?90:siz==='mediana'?55:25,c:'#3b82f6'},{n:'Calidad canal',p:can==='referido'?90:can==='inbound'?60:35,c:'#3b82f6'},{n:'Seniority decisor',p:dec==='si'?85:20,c:'#3b82f6'}].map(f=>`<div class="fb"><div class="fbh"><span class="fbn">${f.n}</span><span class="fbp">${f.p}%</span></div><div class="fbt"><div class="fbf" style="width:${f.p}%;background:${f.c}"></div></div></div>`).join('')}
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="ctitle">Acciones recomendadas</div>
+      ${acts.map(a=>`<div class="rec"><div class="ri">${a.i}</div><div class="rb"><div class="ra">${a.a}</div><div class="rd">${a.d}</div></div></div>`).join('')}
+    </div>
+    <div class="aib"><div class="aih"><span class="aibadge">✦ IA</span><span style="font-size:11px;font-weight:600;color:var(--text2)">Recomendación estratégica + herramientas</span></div><div id="${uid}"></div></div>`;
+  getAI(ctx,document.getElementById(uid));
+}
+</script>
+</body>
 </html>
