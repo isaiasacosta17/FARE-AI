@@ -1,7 +1,7 @@
 /**
  * CASO 1 - CHURN: Predicción de abandono de clientes
- * Empresa de retail con clientes recurrentes
- * 
+ * Caso ilustrativo — E-commerce de productos de hidratación deportiva
+ *
  * Design: Neural Canvas - glassmorphism cards, indigo accents, spring animations
  * Input: Customer behavior data (frequency, recency, monetary, complaints, etc.)
  * Output: Churn probability %, risk level, recommended actions
@@ -29,7 +29,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import AppLayout from "@/components/AppLayout";
@@ -38,7 +37,6 @@ import PredictionLoader from "@/components/PredictionLoader";
 import ResultCard from "@/components/ResultCard";
 
 interface FormData {
-  clientName: string;
   monthsSinceLastPurchase: number;
   purchaseFrequency: string;
   avgTicket: number;
@@ -60,41 +58,35 @@ interface PredictionResult {
 const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663448965180/diJACkPyKq5zDs5dUSARpR/hero-churn-YjREJimCttc6WyQ3qJoCKX.webp";
 
 function simulateChurnPrediction(data: FormData): PredictionResult {
-  // Simulated ML model logic
   let score = 0;
 
-  // Recency impact (months since last purchase)
   if (data.monthsSinceLastPurchase > 6) score += 30;
   else if (data.monthsSinceLastPurchase > 3) score += 15;
   else score += 5;
 
-  // Frequency impact
   if (data.purchaseFrequency === "muy_baja") score += 25;
   else if (data.purchaseFrequency === "baja") score += 15;
   else if (data.purchaseFrequency === "media") score += 8;
   else score += 2;
 
-  // Complaints impact
   score += Math.min(data.complaints * 8, 20);
-
-  // Satisfaction impact (inverse)
   score += Math.max(0, (5 - data.satisfactionScore) * 6);
 
-  // Loyalty program
   if (data.hasLoyaltyProgram === "no") score += 10;
 
-  // Average ticket (low ticket = higher churn risk)
   if (data.avgTicket < 30000) score += 8;
   else if (data.avgTicket < 80000) score += 4;
 
-  // Clamp between 5 and 95
   const churnProbability = Math.min(95, Math.max(5, score + Math.random() * 8 - 4));
 
   const riskLevel: "alto" | "medio" | "bajo" =
     churnProbability > 70 ? "alto" : churnProbability > 40 ? "medio" : "bajo";
 
   const retentionScore = Math.round(100 - churnProbability);
-  const lifetimeValue = Math.round(data.avgTicket * (data.purchaseFrequency === "alta" ? 24 : data.purchaseFrequency === "media" ? 12 : 6));
+  const lifetimeValue = Math.round(
+    data.avgTicket *
+      (data.purchaseFrequency === "alta" ? 24 : data.purchaseFrequency === "media" ? 12 : 6)
+  );
 
   const recommendations =
     riskLevel === "alto"
@@ -110,7 +102,7 @@ function simulateChurnPrediction(data: FormData): PredictionResult {
           { icon: Phone, text: "Agendar seguimiento comercial en 2 semanas", priority: "Baja" },
         ]
       : [
-          { icon: CheckCircle2, text: "Cliente estable - mantener comunicación regular", priority: "Baja" },
+          { icon: CheckCircle2, text: "Cliente estable — mantener comunicación regular", priority: "Baja" },
           { icon: Gift, text: "Incluir en campañas de upselling y cross-selling", priority: "Baja" },
           { icon: Mail, text: "Enviar newsletter mensual con novedades", priority: "Baja" },
         ];
@@ -148,7 +140,6 @@ function simulateChurnPrediction(data: FormData): PredictionResult {
 
 export default function ChurnSimulation() {
   const [formData, setFormData] = useState<FormData>({
-    clientName: "",
     monthsSinceLastPurchase: 2,
     purchaseFrequency: "",
     avgTicket: 50000,
@@ -173,7 +164,6 @@ export default function ChurnSimulation() {
   const handleReset = () => {
     setResult(null);
     setFormData({
-      clientName: "",
       monthsSinceLastPurchase: 2,
       purchaseFrequency: "",
       avgTicket: 50000,
@@ -185,7 +175,6 @@ export default function ChurnSimulation() {
   };
 
   const isFormValid =
-    formData.clientName.trim() !== "" &&
     formData.purchaseFrequency !== "" &&
     formData.hasLoyaltyProgram !== "" &&
     formData.channelPreference !== "";
@@ -195,8 +184,8 @@ export default function ChurnSimulation() {
       <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
         <SimulationHeader
           title="Predicción de Churn"
-          subtitle="Caso 1 — Retail"
-          description="Empresa de retail con clientes recurrentes. El modelo identifica qué clientes están a punto de dejar de comprar para activar campañas de retención a tiempo."
+          subtitle="Caso ilustrativo — E-commerce de hidratación deportiva"
+          description="El modelo identifica qué clientes están a punto de dejar de comprar para activar campañas de retención a tiempo. Accuracy típico: 78–84% | AUC-ROC: 0.80–0.86"
           icon={Users}
           iconColor="text-rose-400"
           iconBg="bg-rose-500/20"
@@ -218,35 +207,23 @@ export default function ChurnSimulation() {
               </div>
               <div>
                 <h3 className="font-heading font-semibold text-slate-800">
-                  Datos del Cliente
+                  Perfil del Cliente
                 </h3>
                 <p className="text-xs text-slate-400">
-                  Ingresa la información del cliente a evaluar
+                  Ingresa el comportamiento de compra a evaluar
                 </p>
               </div>
             </div>
 
             <div className="space-y-5">
-              {/* Client Name */}
-              <div>
-                <Label className="text-xs font-medium text-slate-600 mb-1.5 block">
-                  Nombre del cliente
-                </Label>
-                <Input
-                  placeholder="Ej: María García"
-                  value={formData.clientName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, clientName: e.target.value })
-                  }
-                  className="bg-white/60"
-                />
-              </div>
-
               {/* Months since last purchase */}
               <div>
                 <Label className="text-xs font-medium text-slate-600 mb-1.5 block">
                   <Clock className="w-3.5 h-3.5 inline mr-1" />
-                  Meses desde última compra: <span className="font-mono-nums text-indigo-600">{formData.monthsSinceLastPurchase}</span>
+                  Meses desde última compra:{" "}
+                  <span className="font-mono-nums text-indigo-600">
+                    {formData.monthsSinceLastPurchase}
+                  </span>
                 </Label>
                 <Slider
                   value={[formData.monthsSinceLastPurchase]}
@@ -280,10 +257,10 @@ export default function ChurnSimulation() {
                     <SelectValue placeholder="Seleccionar frecuencia" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="alta">Alta (semanal)</SelectItem>
-                    <SelectItem value="media">Media (mensual)</SelectItem>
-                    <SelectItem value="baja">Baja (trimestral)</SelectItem>
-                    <SelectItem value="muy_baja">Muy baja (semestral+)</SelectItem>
+                    <SelectItem value="alta">Alta — semanal</SelectItem>
+                    <SelectItem value="media">Media — mensual</SelectItem>
+                    <SelectItem value="baja">Baja — trimestral</SelectItem>
+                    <SelectItem value="muy_baja">Muy baja — semestral+</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -292,7 +269,10 @@ export default function ChurnSimulation() {
               <div>
                 <Label className="text-xs font-medium text-slate-600 mb-1.5 block">
                   <DollarSign className="w-3.5 h-3.5 inline mr-1" />
-                  Ticket promedio (COP): <span className="font-mono-nums text-indigo-600">${formData.avgTicket.toLocaleString()}</span>
+                  Ticket promedio (COP):{" "}
+                  <span className="font-mono-nums text-indigo-600">
+                    ${formData.avgTicket.toLocaleString()}
+                  </span>
                 </Label>
                 <Slider
                   value={[formData.avgTicket]}
@@ -314,7 +294,10 @@ export default function ChurnSimulation() {
               <div>
                 <Label className="text-xs font-medium text-slate-600 mb-1.5 block">
                   <MessageSquare className="w-3.5 h-3.5 inline mr-1" />
-                  Quejas en últimos 6 meses: <span className="font-mono-nums text-indigo-600">{formData.complaints}</span>
+                  Quejas en últimos 6 meses:{" "}
+                  <span className="font-mono-nums text-indigo-600">
+                    {formData.complaints}
+                  </span>
                 </Label>
                 <Slider
                   value={[formData.complaints]}
@@ -331,7 +314,10 @@ export default function ChurnSimulation() {
               {/* Satisfaction */}
               <div>
                 <Label className="text-xs font-medium text-slate-600 mb-1.5 block">
-                  Satisfacción del cliente: <span className="font-mono-nums text-indigo-600">{formData.satisfactionScore}/5</span>
+                  Satisfacción del cliente:{" "}
+                  <span className="font-mono-nums text-indigo-600">
+                    {formData.satisfactionScore}/5
+                  </span>
                 </Label>
                 <Slider
                   value={[formData.satisfactionScore]}
@@ -364,8 +350,8 @@ export default function ChurnSimulation() {
                     <SelectValue placeholder="¿Está inscrito?" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="si">Sí, está inscrito</SelectItem>
-                    <SelectItem value="no">No está inscrito</SelectItem>
+                    <SelectItem value="si">Sí, inscrito</SelectItem>
+                    <SelectItem value="no">No inscrito</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -454,7 +440,7 @@ export default function ChurnSimulation() {
                           Resultado de Predicción
                         </p>
                         <h3 className="font-heading font-bold text-xl text-slate-800 mt-1">
-                          {formData.clientName || "Cliente"}
+                          Perfil evaluado
                         </h3>
                       </div>
                       <div
@@ -626,6 +612,12 @@ export default function ChurnSimulation() {
                       })}
                     </div>
                   </motion.div>
+
+                  {/* Ilustrative note */}
+                  <p className="text-[11px] text-slate-400 text-center px-4">
+                    Caso ilustrativo basado en benchmarks del sector. Los resultados reales
+                    dependen de los datos específicos de cada empresa.
+                  </p>
                 </motion.div>
               ) : (
                 <motion.div
@@ -642,7 +634,7 @@ export default function ChurnSimulation() {
                     Resultado de Predicción
                   </h3>
                   <p className="text-sm text-slate-400 max-w-xs">
-                    Completa los datos del cliente y ejecuta la predicción para ver
+                    Completa el perfil del cliente y ejecuta la predicción para ver
                     la probabilidad de churn y las acciones recomendadas.
                   </p>
                 </motion.div>
