@@ -21,7 +21,7 @@ const cases = [
     id: "churn",
     path: "/churn",
     title: "Predicción de Churn",
-    subtitle: "Caso 1 — Retail",
+    subtitle: "Caso ilustrativo — E-commerce de hidratación deportiva",
     description:
       "Identifica qué clientes están a punto de dejar de comprar. Activa campañas de retención a tiempo y reduce la pérdida de clientes.",
     icon: Users,
@@ -37,7 +37,7 @@ const cases = [
     id: "ventas",
     path: "/ventas",
     title: "Forecast de Ventas",
-    subtitle: "Caso 2 — E-commerce",
+    subtitle: "Caso ilustrativo — E-commerce de hidratación deportiva",
     description:
       "Predice cuánto vas a vender el próximo mes para planificar inventario, marketing y producción de forma inteligente.",
     icon: TrendingUp,
@@ -53,7 +53,7 @@ const cases = [
     id: "leads",
     path: "/leads",
     title: "Priorización de Leads",
-    subtitle: "Caso 3 — B2B",
+    subtitle: "Caso ilustrativo — E-commerce de hidratación deportiva",
     description:
       "Determina qué leads tienen mayor probabilidad de compra para que tu equipo comercial se enfoque en los que realmente convierten.",
     icon: Target,
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <div>
               <p className="text-xs font-medium text-indigo-600 uppercase tracking-wider">
-                FARE AI Analytics
+                Predicteer Decisions
               </p>
               <h1 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900">
                 Sistema Predictivo
@@ -97,12 +97,12 @@ export default function Home() {
             Selecciona un caso para explorar el modelo predictivo.
           </p>
 
-          {/* Stats bar */}
+          {/* Stats bar — valores basados en benchmarks reales de la industria */}
           <div className="flex gap-6 mt-6">
             {[
-              { icon: Sparkles, label: "Precisión", value: "85%+" },
-              { icon: BarChart3, label: "Variables", value: "8-10" },
-              { icon: Shield, label: "Confianza", value: "70%+" },
+              { icon: Sparkles, label: "Accuracy típico", value: "78–84%" },
+              { icon: BarChart3, label: "Variables", value: "8–12" },
+              { icon: Shield, label: "AUC-ROC típico", value: "0.80–0.87" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -207,7 +207,7 @@ export default function Home() {
           className="mt-10 text-center"
         >
           <p className="text-xs text-slate-400">
-            Estas simulaciones utilizan modelos simplificados con fines demostrativos.
+            Estas simulaciones son casos ilustrativos basados en benchmarks de la industria.
             Los modelos reales se entrenan con los datos específicos de cada empresa.
           </p>
         </motion.div>
