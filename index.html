@@ -8,116 +8,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-/* ─── RESET + TOKENS ─── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --ink:#0b0c10;
-  --ink-2:#22242e;
-  --ink-3:#3c3f52;
-  --muted:#8b8fa8;
-  --ghost:#b8bbcc;
-  --line:#e8eaf2;
-  --line-2:#f0f2f8;
-  --surface:#ffffff;
-  --bg:#f5f6fb;
-  --sb-bg:#0d0e14;
-  --sb-line:rgba(255,255,255,0.06);
-  --sb-hover:rgba(255,255,255,0.055);
-  --sb-active:rgba(255,255,255,0.09);
-  --sb-text:#9da3bf;
-  --sb-text-hi:#dde0f0;
-  --accent:#2a5af5;
-  --accent-dim:rgba(42,90,245,0.08);
-  --accent-glow:rgba(42,90,245,0.18);
-  --green:#00a86b;
-  --green-bg:rgba(0,168,107,0.08);
-  --red:#e63950;
-  --red-bg:rgba(230,57,80,0.08);
-  --amber:#c97f0a;
-  --amber-bg:rgba(201,127,10,0.08);
-  --teal:#0093a8;
-  --teal-bg:rgba(0,147,168,0.08);
-  --f-display:'Plus Jakarta Sans',sans-serif;
-  --f-mono:'IBM Plex Mono',monospace;
-  --radius:10px;
-  --radius-lg:14px;
+  --ink:#0b0c10;--ink-2:#22242e;--ink-3:#3c3f52;--muted:#8b8fa8;--ghost:#b8bbcc;
+  --line:#e8eaf2;--line-2:#f0f2f8;--surface:#ffffff;--bg:#f5f6fb;
+  --sb-bg:#0d0e14;--sb-line:rgba(255,255,255,0.06);--sb-hover:rgba(255,255,255,0.055);
+  --sb-active:rgba(255,255,255,0.09);--sb-text:#9da3bf;--sb-text-hi:#dde0f0;
+  --accent:#2a5af5;--accent-dim:rgba(42,90,245,0.08);--accent-glow:rgba(42,90,245,0.18);
+  --green:#00a86b;--green-bg:rgba(0,168,107,0.08);--red:#e63950;--red-bg:rgba(230,57,80,0.08);
+  --amber:#c97f0a;--amber-bg:rgba(201,127,10,0.08);--teal:#0093a8;--teal-bg:rgba(0,147,168,0.08);
+  --f-display:'Plus Jakarta Sans',sans-serif;--f-mono:'IBM Plex Mono',monospace;
+  --radius:10px;--radius-lg:14px;
   --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);
   --shadow-md:0 2px 8px rgba(0,0,0,0.07),0 8px 32px rgba(0,0,0,0.07);
 }
-
 html,body{height:100%;font-family:var(--f-display);background:var(--bg);color:var(--ink);}
 body{display:flex;overflow:hidden;}
 
-/* ─────────────────── SIDEBAR ─────────────────── */
-.sb{
-  width:240px;min-width:240px;height:100vh;
-  background:var(--sb-bg);
-  display:flex;flex-direction:column;
-  border-right:1px solid var(--sb-line);
-  overflow-y:auto;scrollbar-width:none;
-}
+/* SIDEBAR */
+.sb{width:240px;min-width:240px;height:100vh;background:var(--sb-bg);display:flex;flex-direction:column;border-right:1px solid var(--sb-line);overflow-y:auto;scrollbar-width:none;}
 .sb::-webkit-scrollbar{display:none;}
-
-.sb-head{
-  padding:22px 18px 16px;
-  border-bottom:1px solid var(--sb-line);
-  display:flex;align-items:center;gap:10px;
-  flex-shrink:0;
-}
-.sb-logo-mark{
-  width:34px;height:34px;border-radius:9px;flex-shrink:0;
-  background:linear-gradient(135deg,#1a2a5e,#0f1a3d);
-  border:1px solid rgba(42,90,245,0.4);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 16px rgba(42,90,245,0.2);
-}
+.sb-head{padding:22px 18px 16px;border-bottom:1px solid var(--sb-line);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.sb-logo-mark{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:linear-gradient(135deg,#1a2a5e,#0f1a3d);border:1px solid rgba(42,90,245,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(42,90,245,0.2);}
 .sb-brand{flex:1;}
 .sb-brand-name{font-size:12.5px;font-weight:800;color:#eef0f8;letter-spacing:0.6px;}
 .sb-brand-sub{font-size:9px;color:var(--sb-text);letter-spacing:1.4px;margin-top:1.5px;}
-
-/* Client pill */
-.sb-client-wrap{padding:10px 12px;border-bottom:1px solid var(--sb-line);flex-shrink:0;}
-.sb-section-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.22);margin-bottom:7px;padding:0 4px;}
-.client-pill{
-  position:relative;
-  background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.08);
-  border-radius:8px;padding:8px 10px;
-  display:flex;align-items:center;gap:8px;cursor:pointer;
-  transition:border-color .15s,background .15s;
-}
-.client-pill:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.13);}
-.c-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.c-name{font-size:11.5px;font-weight:600;color:var(--sb-text-hi);flex:1;}
-.c-caret{color:rgba(255,255,255,0.25);flex-shrink:0;transition:transform .2s;}
-.client-pill.open .c-caret{transform:rotate(180deg);}
-.c-drop{
-  position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:200;
-  background:#17192a;border:1px solid rgba(255,255,255,0.12);
-  border-radius:10px;overflow:hidden;
-  box-shadow:0 16px 48px rgba(0,0,0,0.6);
-  display:none;
-}
-.c-drop.open{display:block;}
-.c-opt{
-  padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;
-  transition:background .12s;
-}
-.c-opt:hover{background:rgba(255,255,255,0.045);}
-.c-opt.sel{background:rgba(42,90,245,0.1);}
-.c-opt-name{font-size:11.5px;font-weight:600;color:var(--sb-text-hi);}
-.c-opt-type{font-size:10px;color:var(--sb-text);margin-top:1px;}
-
-/* Nav */
 .sb-nav{flex:1;padding:10px 10px 16px;}
 .nav-group-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.22);padding:10px 8px 6px;}
-.nav-item{
-  display:flex;align-items:center;gap:9px;
-  padding:8px 9px;border-radius:7px;
-  cursor:pointer;color:var(--sb-text);
-  font-size:12px;font-weight:500;
-  transition:background .12s,color .12s;
-  margin-bottom:1px;
-}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:7px;cursor:pointer;color:var(--sb-text);font-size:12px;font-weight:500;transition:background .12s,color .12s;margin-bottom:1px;}
 .nav-item:hover{background:var(--sb-hover);color:var(--sb-text-hi);}
 .nav-item.active{background:var(--sb-active);color:#fff;}
 .nav-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,0.04);}
@@ -127,89 +45,48 @@ body{display:flex;overflow:hidden;}
 .nav-item.active .nav-sub{color:rgba(255,255,255,0.35);}
 .nav-chip{font-size:9px;font-family:var(--f-mono);font-weight:500;padding:2px 6px;border-radius:4px;background:rgba(42,90,245,0.15);color:rgba(140,160,255,0.9);}
 
-/* ─────────────────── MAIN ─────────────────── */
+/* MAIN */
 .main{flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
-
-/* Pages */
 .page{display:none;flex:1;flex-direction:column;animation:fadeUp .25s ease both;}
 .page.active{display:flex;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
-/* ─── HERO ─── */
-.hero{
-  position:relative;height:188px;flex-shrink:0;overflow:hidden;
-  background:#0d0e14;
-}
-.hero-img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center;
-  opacity:.38;
-  mix-blend-mode:luminosity;
-  filter:contrast(1.1) saturate(0.5);
-}
-.hero-gradient{
-  position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(13,14,20,.96) 0%, rgba(13,14,20,.7) 55%, rgba(13,14,20,.2) 100%);
-}
-.hero-content{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:24px 32px;
-}
-.hero-eyebrow{
-  font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:2px;
-  color:rgba(255,255,255,0.4);margin-bottom:7px;
-  display:flex;align-items:center;gap:7px;
-}
+/* HERO */
+.hero{position:relative;height:188px;flex-shrink:0;overflow:hidden;background:#0d0e14;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.38;mix-blend-mode:luminosity;filter:contrast(1.1) saturate(0.5);}
+.hero-gradient{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,14,20,.96) 0%,rgba(13,14,20,.7) 55%,rgba(13,14,20,.2) 100%);}
+.hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 32px;}
+.hero-eyebrow{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.4);margin-bottom:7px;display:flex;align-items:center;gap:7px;}
 .hero-eyebrow::before{content:'';width:14px;height:1px;background:rgba(255,255,255,0.3);}
 .hero-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1.15;}
 .hero-desc{font-size:12.5px;color:rgba(255,255,255,.48);margin-top:5px;max-width:480px;line-height:1.6;}
-.hero-pill{
-  position:absolute;top:18px;right:24px;
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.07);backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;padding:5px 12px;
-}
+.hero-pill{position:absolute;top:18px;right:24px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:5px 12px;}
 .hero-pill-dot{width:5px;height:5px;border-radius:50%;background:#00c97a;box-shadow:0 0 6px #00c97a;}
 .hero-pill-text{font-size:10px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.5px;}
 
-/* ─── BODY CONTENT ─── */
+/* BODY */
 .body-wrap{padding:28px 32px;flex:1;}
 .body-wrap.max{max-width:1020px;}
+.slabel{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px;}
 
-/* ─── SECTION LABEL ─── */
-.slabel{
-  font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-  color:var(--muted);margin-bottom:14px;
-}
-
-/* ─── METRIC STRIP ─── */
-.metric-strip{
-  display:flex;border:1px solid var(--line);border-radius:var(--radius-lg);
-  overflow:hidden;background:var(--surface);margin-bottom:24px;
-  box-shadow:var(--shadow);
-}
+/* METRIC STRIP */
+.metric-strip{display:flex;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin-bottom:24px;box-shadow:var(--shadow);}
 .ms{flex:1;padding:14px 18px;border-right:1px solid var(--line);}
 .ms:last-child{border-right:none;}
 .ms-val{font-size:22px;font-weight:800;letter-spacing:-0.8px;color:var(--ink);}
 .ms-lbl{font-size:10px;font-weight:500;color:var(--muted);margin-top:2px;}
-.ms-badge{
-  display:inline-block;font-size:9px;font-family:var(--f-mono);font-weight:500;
-  padding:2px 7px;border-radius:4px;margin-top:6px;
-  background:var(--green-bg);color:var(--green);
-}
+.ms-badge{display:inline-block;font-size:9px;font-family:var(--f-mono);font-weight:500;padding:2px 7px;border-radius:4px;margin-top:6px;background:var(--green-bg);color:var(--green);}
 
-/* ─── CARDS ─── */
+/* CARDS */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow);}
 .card-sm{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
 
-/* ─── GRID ─── */
+/* GRID */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
 .pred-grid{display:grid;grid-template-columns:356px 1fr;gap:18px;align-items:start;}
 
-/* ─── TAGS ─── */
+/* TAGS */
 .tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;}
 .tg-red{background:var(--red-bg);color:var(--red);}
 .tg-green{background:var(--green-bg);color:var(--green);}
@@ -217,69 +94,40 @@ body{display:flex;overflow:hidden;}
 .tg-blue{background:rgba(42,90,245,0.08);color:var(--accent);}
 .tg-teal{background:var(--teal-bg);color:var(--teal);}
 
-/* ─── STAT CARDS ─── */
+/* STAT CARDS */
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);}
 .st-val{font-size:22px;font-weight:800;letter-spacing:-0.8px;color:var(--ink);}
 .st-lbl{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500;}
 
-/* ─── FORM ─── */
+/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px;}
 .form-grid.w1{grid-template-columns:1fr;}
 .form-grid.w3{grid-template-columns:1fr 1fr 1fr;gap:11px;}
 .fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:5px;}
-.fg input,.fg select{
-  width:100%;background:var(--bg);
-  border:1.5px solid var(--line);
-  border-radius:8px;padding:9px 11px;
-  color:var(--ink);font-family:var(--f-display);font-size:12.5px;font-weight:500;
-  outline:none;transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-glow);
-  background:var(--surface);
-}
+.fg input,.fg select{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--ink);font-family:var(--f-display);font-size:12.5px;font-weight:500;outline:none;transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);background:var(--surface);}
 .fg select option{background:var(--surface);}
 .rh{display:flex;justify-content:space-between;align-items:center;}
 .rv{font-size:11px;font-family:var(--f-mono);font-weight:500;color:var(--accent);}
-input[type=range]{
-  width:100%;-webkit-appearance:none;appearance:none;
-  height:3px;background:var(--line);border-radius:2px;
-  outline:none;border:none;padding:0;margin-top:9px;cursor:pointer;
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:14px;height:14px;
-  border-radius:50%;background:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-glow);cursor:pointer;
-}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:var(--line);border-radius:2px;outline:none;border:none;padding:0;margin-top:9px;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);cursor:pointer;}
 
-/* ─── BUTTON ─── */
-.btn{
-  width:100%;padding:12px 18px;margin-top:6px;
-  background:var(--ink);color:#fff;
-  font-family:var(--f-display);font-size:13px;font-weight:700;
-  border:none;border-radius:9px;cursor:pointer;
-  letter-spacing:-.1px;
-  transition:background .15s,transform .1s,box-shadow .15s;
-  box-shadow:0 2px 10px rgba(0,0,0,0.18);
-}
+/* BUTTON */
+.btn{width:100%;padding:12px 18px;margin-top:6px;background:var(--ink);color:#fff;font-family:var(--f-display);font-size:13px;font-weight:700;border:none;border-radius:9px;cursor:pointer;letter-spacing:-.1px;transition:background .15s,transform .1s,box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,0.18);}
 .btn:hover{background:var(--ink-2);box-shadow:0 4px 16px rgba(0,0,0,0.22);}
 .btn:active{transform:scale(.98);}
 
-/* ─── EMPTY STATE ─── */
-.empty{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:400px;text-align:center;gap:10px;
-}
+/* EMPTY STATE */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:10px;}
 .empty-icon{opacity:.18;}
 .empty-text{font-size:13px;color:var(--muted);max-width:200px;line-height:1.65;}
 
-/* ─── GAUGE ─── */
+/* GAUGE */
 .gauge-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;}
 .g-num{font-size:46px;font-weight:800;letter-spacing:-2px;margin-top:-5px;}
 .g-sub{font-size:10.5px;color:var(--muted);margin-top:1px;font-weight:500;}
 
-/* ─── FACTOR BARS ─── */
+/* FACTOR BARS */
 .fbar{margin-bottom:11px;}
 .fb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
 .fb-name{font-size:11.5px;font-weight:500;color:var(--ink-3);}
@@ -287,175 +135,77 @@ input[type=range]::-webkit-slider-thumb{
 .fb-track{height:4px;background:var(--line-2);border-radius:2px;overflow:hidden;}
 .fb-fill{height:100%;border-radius:2px;transition:width .9s cubic-bezier(.4,0,.2,1);}
 
-/* ─── RECOMMENDATION CARD ─── */
-.rec{
-  display:flex;gap:12px;align-items:flex-start;
-  padding:13px 15px;border-radius:10px;
-  background:var(--bg);border:1.5px solid var(--line);
-  margin-bottom:9px;
-  transition:border-color .15s,box-shadow .15s;
-}
+/* REC CARD */
+.rec{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border-radius:10px;background:var(--bg);border:1.5px solid var(--line);margin-bottom:9px;transition:border-color .15s,box-shadow .15s;}
 .rec:hover{border-color:#c8ccdf;box-shadow:0 2px 8px rgba(42,90,245,0.07);}
-.rec-ic{
-  width:32px;height:32px;border-radius:8px;flex-shrink:0;
-  background:var(--surface);border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;
-}
+.rec-ic{width:32px;height:32px;border-radius:8px;flex-shrink:0;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
 .rec-body{flex:1;}
 .rec-title{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:3px;}
 .rec-desc{font-size:11.5px;color:var(--ink-3);line-height:1.6;}
-.rec-tool{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:10px;font-family:var(--f-mono);font-weight:500;
-  padding:2px 8px;border-radius:5px;
-  background:rgba(42,90,245,0.07);color:var(--accent);
-  border:1px solid rgba(42,90,245,0.15);
-  white-space:nowrap;margin-left:4px;
-  vertical-align:middle;
-}
-.rec-pri{
-  flex-shrink:0;
-  font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
-  padding:3px 8px;border-radius:20px;
-}
+.rec-tool{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:var(--f-mono);font-weight:500;padding:2px 8px;border-radius:5px;background:rgba(42,90,245,0.07);color:var(--accent);border:1px solid rgba(42,90,245,0.15);white-space:nowrap;margin-left:4px;vertical-align:middle;}
+.rec-pri{flex-shrink:0;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border-radius:20px;}
 
-/* ─── DIVIDER ─── */
+/* DIVIDER */
 .div{height:1px;background:var(--line);margin:16px 0;}
 
-/* ─── FORECAST BARS ─── */
+/* FORECAST BARS */
 .fcast{display:flex;gap:10px;align-items:flex-end;height:72px;margin:12px 0 8px;}
 .fc-col{flex:1;display:flex;flex-direction:column;align-items:center;}
 .fc-bar{width:100%;border-radius:4px 4px 0 0;transition:height .5s ease;}
 .fc-lbl{font-size:9px;color:var(--muted);margin-top:5px;font-family:var(--f-mono);}
 .fc-val{font-size:10px;font-weight:600;font-family:var(--f-mono);color:var(--ink-3);}
 
-/* ─── HOME QUICK CARDS ─── */
-.qcard{
-  background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);
-  padding:18px;cursor:pointer;
-  transition:border-color .15s,box-shadow .15s,transform .15s;
-}
+/* HOME CARDS */
+.qcard{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:18px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;}
 .qcard:hover{border-color:#c0c5d8;box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .qcard-icon{width:36px;height:36px;border-radius:9px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;}
 .qcard-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:4px;}
 .qcard-desc{font-size:11px;color:var(--muted);line-height:1.55;}
-.qcard-chip{
-  display:inline-block;font-size:9.5px;font-family:var(--f-mono);font-weight:500;
-  padding:2px 8px;border-radius:5px;margin-top:8px;
-}
+.qcard-chip{display:inline-block;font-size:9.5px;font-family:var(--f-mono);font-weight:500;padding:2px 8px;border-radius:5px;margin-top:8px;}
 
-/* ─── SVG ICONS (reusable via <use>) ─── */
+/* DISCLAIMER */
+.disclaimer{font-size:10px;color:var(--ghost);text-align:center;padding:12px 0 4px;font-style:italic;}
 </style>
 </head>
 <body>
 
-<!-- Hidden SVG sprite -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="ic-home" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 6.5L8 2l6 4.5V14a1 1 0 01-1 1H3a1 1 0 01-1-1V6.5z"/><path d="M6 15V9h4v6"/>
-  </symbol>
-  <symbol id="ic-trend-down" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="1,5 6,10 9,7 15,13"/><polyline points="10,13 15,13 15,8"/>
-  </symbol>
-  <symbol id="ic-trend-up" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="1,11 6,6 9,9 15,3"/><polyline points="10,3 15,3 15,8"/>
-  </symbol>
-  <symbol id="ic-target" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.5"/><line x1="8" y1="1.5" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14.5"/>
-  </symbol>
-  <symbol id="ic-cart" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1 1h2l2 8h7l2-5H5"/><circle cx="7" cy="13" r="1"/><circle cx="12" cy="13" r="1"/>
-  </symbol>
-  <symbol id="ic-refresh" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1 8a7 7 0 1013.2-3.3"/><polyline points="14,1 14,5 10,5"/>
-  </symbol>
-  <symbol id="ic-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="2,3.5 5,6.5 8,3.5"/>
-  </symbol>
-  <symbol id="ic-logo" viewBox="0 0 22 22" fill="none">
-    <path d="M11 1.5L20.5 11L11 20.5L1.5 11Z" stroke="#4a72f5" stroke-width="1.2"/>
-    <path d="M11 6L16 11L11 16L6 11Z" stroke="#7090ff" stroke-width=".9" opacity=".55"/>
-    <line x1="11" y1="16" x2="11" y2="7" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-    <polyline points="8.5,9.5 11,7 13.5,9.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-  <!-- Rec icons -->
-  <symbol id="ic-mail" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="1" y="3" width="12" height="8" rx="1.5"/><polyline points="1,3 7,8 13,3"/>
-  </symbol>
-  <symbol id="ic-phone" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 2h3.5l1.5 3.5-2 1.2a8 8 0 003.3 3.3l1.2-2L13 9.5V13a1 1 0 01-1 1A11 11 0 011 3a1 1 0 011-1z"/>
-  </symbol>
-  <symbol id="ic-gift" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="1" y="5" width="12" height="8" rx="1"/><rect x="3.5" y="2" width="3" height="3" rx="1.5"/><rect x="7.5" y="2" width="3" height="3" rx="1.5"/><line x1="7" y1="5" x2="7" y2="13"/>
-  </symbol>
-  <symbol id="ic-bolt" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="8,1 3,8 7,8 6,13 11,6 7,6 8,1"/>
-  </symbol>
-  <symbol id="ic-star" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="7,1 8.8,5 13,5.3 9.9,8 11,12 7,9.8 3,12 4.1,8 1,5.3 5.2,5"/>
-  </symbol>
-  <symbol id="ic-users" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 12v-1a3 3 0 00-6 0v1"/><circle cx="6" cy="5" r="2.5"/><path d="M12 12v-1a3 3 0 00-2.5-2.9"/><path d="M9.5 2.1a2.5 2.5 0 010 4.8"/>
-  </symbol>
-  <symbol id="ic-clock" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="7" cy="7" r="6"/><polyline points="7,3.5 7,7 9.5,9"/>
-  </symbol>
-  <symbol id="ic-tag" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1 1h5.5l6 6a1.5 1.5 0 010 2.1L9 12.6a1.5 1.5 0 01-2.1 0L1 6.5V1z"/><circle cx="4" cy="4" r=".8" fill="currentColor"/>
-  </symbol>
-  <symbol id="ic-alert" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M7 1L13 12H1L7 1z"/><line x1="7" y1="5.5" x2="7" y2="8.5"/><circle cx="7" cy="10.5" r=".6" fill="currentColor"/>
-  </symbol>
-  <symbol id="ic-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="7" cy="7" r="6"/><polyline points="4,7 6.5,9.5 10,5"/>
-  </symbol>
-  <symbol id="ic-box" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 9.5V4.5a1 1 0 00-.5-.87l-4-2.3a1 1 0 00-1 0l-4 2.3A1 1 0 002 4.5v5a1 1 0 00.5.87l4 2.3a1 1 0 001 0l4-2.3A1 1 0 0012 9.5z"/><line x1="7" y1="1.35" x2="7" y2="7"/><line x1="2.2" y1="4.2" x2="7" y2="7"/>
-  </symbol>
+  <symbol id="ic-home" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5L8 2l6 4.5V14a1 1 0 01-1 1H3a1 1 0 01-1-1V6.5z"/><path d="M6 15V9h4v6"/></symbol>
+  <symbol id="ic-trend-down" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,5 6,10 9,7 15,13"/><polyline points="10,13 15,13 15,8"/></symbol>
+  <symbol id="ic-trend-up" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,11 6,6 9,9 15,3"/><polyline points="10,3 15,3 15,8"/></symbol>
+  <symbol id="ic-target" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.5"/><line x1="8" y1="1.5" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14.5"/></symbol>
+  <symbol id="ic-cart" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1h2l2 8h7l2-5H5"/><circle cx="7" cy="13" r="1"/><circle cx="12" cy="13" r="1"/></symbol>
+  <symbol id="ic-refresh" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8a7 7 0 1013.2-3.3"/><polyline points="14,1 14,5 10,5"/></symbol>
+  <symbol id="ic-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,3.5 5,6.5 8,3.5"/></symbol>
+  <symbol id="ic-logo" viewBox="0 0 22 22" fill="none"><path d="M11 1.5L20.5 11L11 20.5L1.5 11Z" stroke="#4a72f5" stroke-width="1.2"/><path d="M11 6L16 11L11 16L6 11Z" stroke="#7090ff" stroke-width=".9" opacity=".55"/><line x1="11" y1="16" x2="11" y2="7" stroke="white" stroke-width="1.5" stroke-linecap="round"/><polyline points="8.5,9.5 11,7 13.5,9.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="12" height="8" rx="1.5"/><polyline points="1,3 7,8 13,3"/></symbol>
+  <symbol id="ic-phone" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2h3.5l1.5 3.5-2 1.2a8 8 0 003.3 3.3l1.2-2L13 9.5V13a1 1 0 01-1 1A11 11 0 011 3a1 1 0 011-1z"/></symbol>
+  <symbol id="ic-gift" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="12" height="8" rx="1"/><rect x="3.5" y="2" width="3" height="3" rx="1.5"/><rect x="7.5" y="2" width="3" height="3" rx="1.5"/><line x1="7" y1="5" x2="7" y2="13"/></symbol>
+  <symbol id="ic-bolt" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,1 3,8 7,8 6,13 11,6 7,6 8,1"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="7,1 8.8,5 13,5.3 9.9,8 11,12 7,9.8 3,12 4.1,8 1,5.3 5.2,5"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12v-1a3 3 0 00-6 0v1"/><circle cx="6" cy="5" r="2.5"/><path d="M12 12v-1a3 3 0 00-2.5-2.9"/><path d="M9.5 2.1a2.5 2.5 0 010 4.8"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="6"/><polyline points="7,3.5 7,7 9.5,9"/></symbol>
+  <symbol id="ic-tag" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1h5.5l6 6a1.5 1.5 0 010 2.1L9 12.6a1.5 1.5 0 01-2.1 0L1 6.5V1z"/><circle cx="4" cy="4" r=".8" fill="currentColor"/></symbol>
+  <symbol id="ic-alert" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1L13 12H1L7 1z"/><line x1="7" y1="5.5" x2="7" y2="8.5"/><circle cx="7" cy="10.5" r=".6" fill="currentColor"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="6"/><polyline points="4,7 6.5,9.5 10,5"/></symbol>
+  <symbol id="ic-box" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9.5V4.5a1 1 0 00-.5-.87l-4-2.3a1 1 0 00-1 0l-4 2.3A1 1 0 002 4.5v5a1 1 0 00.5.87l4 2.3a1 1 0 001 0l4-2.3A1 1 0 0012 9.5z"/><line x1="7" y1="1.35" x2="7" y2="7"/><line x1="2.2" y1="4.2" x2="7" y2="7"/></symbol>
 </svg>
 
-<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<!-- SIDEBAR -->
 <aside class="sb">
   <div class="sb-head">
-    <div class="sb-logo-mark">
-      <svg width="20" height="20"><use href="#ic-logo"/></svg>
-    </div>
+    <div class="sb-logo-mark"><svg width="20" height="20"><use href="#ic-logo"/></svg></div>
     <div class="sb-brand">
       <div class="sb-brand-name">PREDICTEER</div>
       <div class="sb-brand-sub">PREDICT · STEER · EXECUTE</div>
     </div>
   </div>
-
-  <div class="sb-client-wrap">
-    <div class="sb-section-label">Cliente activo</div>
-    <div class="client-pill" id="cpill" onclick="toggleDrop()">
-      <div class="c-dot" id="cdot" style="background:#4a72f5"></div>
-      <span class="c-name" id="cname">Demo · Retail S.A.</span>
-      <svg width="10" height="10" class="c-caret" id="ccaret"><use href="#ic-chevron"/></svg>
-      <div class="c-drop" id="cdrop">
-        <div class="c-opt sel" onclick="pickClient(0,event)">
-          <div style="width:6px;height:6px;border-radius:50%;background:#4a72f5;flex-shrink:0"></div>
-          <div><div class="c-opt-name">Demo · Retail S.A.</div><div class="c-opt-type">Churn · Demo</div></div>
-        </div>
-        <div class="c-opt" onclick="pickClient(1,event)">
-          <div style="width:6px;height:6px;border-radius:50%;background:#00a86b;flex-shrink:0"></div>
-          <div><div class="c-opt-name">Éxito · E-commerce</div><div class="c-opt-type">Forecast · Activo</div></div>
-        </div>
-        <div class="c-opt" onclick="pickClient(2,event)">
-          <div style="width:6px;height:6px;border-radius:50%;background:#c97f0a;flex-shrink:0"></div>
-          <div><div class="c-opt-name">Bancolombia · B2B</div><div class="c-opt-type">Leads · Activo</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <nav class="sb-nav">
     <div class="nav-group-label">General</div>
     <div class="nav-item active" id="ni-home" onclick="showP('home')">
       <div class="nav-icon"><svg width="13" height="13"><use href="#ic-home"/></svg></div>
       <div class="nav-meta"><div>Dashboard</div><div class="nav-sub">Resumen del modelo</div></div>
     </div>
-
     <div class="nav-group-label">Predicciones</div>
     <div class="nav-item" id="ni-churn" onclick="showP('churn')">
       <div class="nav-icon"><svg width="13" height="13"><use href="#ic-trend-down"/></svg></div>
@@ -485,29 +235,28 @@ input[type=range]::-webkit-slider-thumb{
   </nav>
 </aside>
 
-<!-- ═══════════════ MAIN ═══════════════ -->
+<!-- MAIN -->
 <main class="main">
 
-<!-- ── HOME ── -->
+<!-- HOME -->
 <section class="page active" id="page-home">
   <div class="hero">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0d1025 0%,#111830 50%,#0a0f1e 100%);"></div>
-    <!-- Subtle grid pattern -->
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.06" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="white" stroke-width=".5"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
     <div class="hero-gradient"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">Dashboard</div>
-      <div class="hero-title" id="ht">Demo · Retail S.A.</div>
-      <div class="hero-desc" id="hd">Sistema de predicciones activo — 5 modelos disponibles</div>
+      <div class="hero-title">Caso ilustrativo — E-commerce de productos de hidratación deportiva</div>
+      <div class="hero-desc">Sistema de predicciones · 5 modelos disponibles · Benchmarks de la industria</div>
     </div>
-    <div class="hero-pill"><div class="hero-pill-dot"></div><span class="hero-pill-text" id="hbadge">MODELO ACTIVO</span></div>
+    <div class="hero-pill"><div class="hero-pill-dot"></div><span class="hero-pill-text">MODELO ACTIVO</span></div>
   </div>
   <div class="body-wrap max">
-    <div class="metric-strip" id="mgrid">
-      <div class="ms"><div class="ms-val">87%</div><div class="ms-lbl">Accuracy</div><div class="ms-badge">test set</div></div>
-      <div class="ms"><div class="ms-val">0.91</div><div class="ms-lbl">AUC-ROC</div><div class="ms-badge">binario</div></div>
-      <div class="ms"><div class="ms-val">12.4k</div><div class="ms-lbl">Registros</div><div class="ms-badge">entrenamiento</div></div>
-      <div class="ms"><div class="ms-val">9</div><div class="ms-lbl">Variables</div><div class="ms-badge">features</div></div>
+    <div class="metric-strip">
+      <div class="ms"><div class="ms-val">82%</div><div class="ms-lbl">Accuracy</div><div class="ms-badge">test set</div></div>
+      <div class="ms"><div class="ms-val">0.84</div><div class="ms-lbl">AUC-ROC</div><div class="ms-badge">binario</div></div>
+      <div class="ms"><div class="ms-val">14.2k</div><div class="ms-lbl">Registros</div><div class="ms-badge">entrenamiento</div></div>
+      <div class="ms"><div class="ms-val">11</div><div class="ms-lbl">Variables</div><div class="ms-badge">features</div></div>
       <div class="ms"><div class="ms-val">RF</div><div class="ms-lbl">Algoritmo</div><div class="ms-badge">activo</div></div>
     </div>
     <div class="slabel">Módulos disponibles</div>
@@ -545,10 +294,11 @@ input[type=range]::-webkit-slider-thumb{
         <span class="qcard-chip" style="background:var(--teal-bg);color:var(--teal);">Secuencial · Neural Net</span>
       </div>
     </div>
+    <div class="disclaimer">Caso ilustrativo basado en benchmarks de la industria. Los valores de accuracy y AUC-ROC corresponden al rango típico alcanzable para e-commerce con 12–24 meses de historial de compras.</div>
   </div>
 </section>
 
-<!-- ── CHURN ── -->
+<!-- CHURN -->
 <section class="page" id="page-churn">
   <div class="hero">
     <img class="hero-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663448965180/diJACkPyKq5zDs5dUSARpR/hero-churn-YjREJimCttc6WyQ3qJoCKX.webp"/>
@@ -556,7 +306,7 @@ input[type=range]::-webkit-slider-thumb{
     <div class="hero-content">
       <div class="hero-eyebrow">Clasificación · Random Forest</div>
       <div class="hero-title">Predicción de Churn</div>
-      <div class="hero-desc" id="csub">Identifica clientes a punto de abandonar para activar retención a tiempo y reducir pérdida de ingresos.</div>
+      <div class="hero-desc">Identifica clientes a punto de abandonar para activar retención a tiempo y reducir pérdida de ingresos.</div>
     </div>
     <div class="hero-pill"><div class="hero-pill-dot"></div><span class="hero-pill-text">MODELO ACTIVO</span></div>
   </div>
@@ -565,27 +315,27 @@ input[type=range]::-webkit-slider-thumb{
       <div class="card">
         <div class="slabel" style="margin-bottom:16px;">Datos del cliente</div>
         <div class="form-grid">
-          <div class="fg"><label>Nombre del cliente</label><input type="text" id="cn" placeholder="Ej: María García"/></div>
           <div class="fg"><label>Frecuencia de compra</label><select id="cf"><option value="alta">Alta — semanal</option><option value="media" selected>Media — mensual</option><option value="baja">Baja — trimestral</option></select></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Meses desde última compra</label><input type="number" id="cm" value="3" min="0" max="36"/></div>
-          <div class="fg"><label>Compras históricas totales</label><input type="number" id="cco" value="12" min="0"/></div>
         </div>
         <div class="form-grid">
+          <div class="fg"><label>Compras históricas totales</label><input type="number" id="cco" value="12" min="0"/></div>
           <div class="fg"><label>Ticket promedio ($)</label><input type="number" id="ctk" value="85000" min="0"/></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Quejas últimos 6 meses</label><input type="number" id="cq" value="1" min="0" max="20"/></div>
+          <div class="fg"><label>Programa de fidelización</label><select id="cfid"><option value="si">Sí, inscrito</option><option value="no">No inscrito</option></select></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Satisfacción del cliente (NPS)</span><span class="rv" id="csat-v">7/10</span></div></label><input type="range" id="csat" min="1" max="10" value="7" oninput="document.getElementById('csat-v').textContent=this.value+'/10'"/></div>
         </div>
         <div class="form-grid">
-          <div class="fg"><label>Programa de fidelización</label><select id="cfid"><option value="si">Sí, inscrito</option><option value="no">No inscrito</option></select></div>
           <div class="fg"><label>Canal de compra preferido</label><select id="ccan"><option value="fisica">Tienda física</option><option value="digital">E-commerce</option><option value="mixto">Ambos canales</option></select></div>
+          <div class="fg"><label>Descuentos usados (últimos 3m)</label><input type="number" id="cdesc" value="2" min="0" max="20"/></div>
         </div>
         <div class="form-grid">
-          <div class="fg"><label>Descuentos usados (últimos 3m)</label><input type="number" id="cdesc" value="2" min="0" max="20"/></div>
           <div class="fg"><label>Categorías compradas</label><select id="ccats"><option value="1">1 categoría</option><option value="2" selected>2-3 categorías</option><option value="4">4+ categorías</option></select></div>
+          <div class="fg"></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Gasto último mes vs promedio</span><span class="rv" id="ctrend-v">100%</span></div></label><input type="range" id="ctrend" min="20" max="200" value="100" oninput="document.getElementById('ctrend-v').textContent=this.value+'%'"/></div>
@@ -597,7 +347,7 @@ input[type=range]::-webkit-slider-thumb{
   </div>
 </section>
 
-<!-- ── VENTAS ── -->
+<!-- VENTAS -->
 <section class="page" id="page-ventas">
   <div class="hero">
     <img class="hero-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663448965180/diJACkPyKq5zDs5dUSARpR/hero-sales-dDjE8fo88v2rJbMnMmcadk.webp"/>
@@ -643,7 +393,7 @@ input[type=range]::-webkit-slider-thumb{
   </div>
 </section>
 
-<!-- ── LEADS ── -->
+<!-- LEADS -->
 <section class="page" id="page-leads">
   <div class="hero">
     <img class="hero-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663448965180/diJACkPyKq5zDs5dUSARpR/hero-leads-iqJXVQuzWMTu3HJDmo6cip.webp"/>
@@ -660,26 +410,25 @@ input[type=range]::-webkit-slider-thumb{
       <div class="card">
         <div class="slabel" style="margin-bottom:16px;">Datos del lead</div>
         <div class="form-grid">
-          <div class="fg"><label>Nombre del contacto</label><input type="text" id="lnom" placeholder="Ej: Carlos Pérez"/></div>
           <div class="fg"><label>Cargo</label><select id="lcargo"><option value="ceo">CEO / Fundador</option><option value="director">Director / VP</option><option value="gerente">Gerente</option><option value="analista">Analista / Ejecutivo</option></select></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Tamaño de empresa</label><select id="ltam"><option value="micro">Micro — menos de 10</option><option value="pyme">Pyme — 10 a 50</option><option value="mediana">Mediana — 50 a 250</option><option value="grande">Grande — 250+</option></select></div>
-          <div class="fg"><label>Industria</label><select id="lind"><option value="retail">Retail / E-commerce</option><option value="servicios">Servicios profesionales</option><option value="manufactura">Manufactura</option><option value="educacion">Educación</option><option value="fintech">Fintech / Banca</option><option value="salud">Salud</option></select></div>
         </div>
         <div class="form-grid">
+          <div class="fg"><label>Industria</label><select id="lind"><option value="retail">Retail / E-commerce</option><option value="servicios">Servicios profesionales</option><option value="manufactura">Manufactura</option><option value="educacion">Educación</option><option value="fintech">Fintech / Banca</option><option value="salud">Salud</option></select></div>
           <div class="fg"><label>Fuente del lead</label><select id="lfuente"><option value="inbound">Inbound — web/contenido</option><option value="outbound">Outbound — prospección</option><option value="referido">Referido</option><option value="evento">Evento / Networking</option></select></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Presupuesto estimado</label><select id="lbud"><option value="bajo">Bajo — menos de $5M</option><option value="medio">Medio — $5M a $20M</option><option value="alto">Alto — $20M+</option></select></div>
+          <div class="fg"><label>Rol en la decisión de compra</label><select id="ldec"><option value="si">Tomador de decisión</option><option value="influenciador">Influenciador</option></select></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Nivel de interacción / engagement</span><span class="rv" id="lint-v">7/10</span></div></label><input type="range" id="lint" min="1" max="10" value="7" oninput="document.getElementById('lint-v').textContent=this.value+'/10'"/></div>
         </div>
         <div class="form-grid">
-          <div class="fg"><label>Rol en la decisión de compra</label><select id="ldec"><option value="si">Tomador de decisión</option><option value="influenciador">Influenciador</option></select></div>
           <div class="fg"><label>Reuniones realizadas</label><input type="number" id="lmeets" value="2" min="0" max="20"/></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Días en el pipeline</label><input type="number" id="ldias" value="15" min="0" max="365"/></div>
+        </div>
+        <div class="form-grid w1">
           <div class="fg"><label>Contenido más avanzado descargado</label><select id="lcont"><option value="ninguno">Ninguno</option><option value="blog">Blog / artículo</option><option value="caso">Caso de éxito</option><option value="demo">Demo / trial solicitado</option></select></div>
         </div>
         <button class="btn" onclick="runLeads()">Evaluar lead</button>
@@ -689,7 +438,7 @@ input[type=range]::-webkit-slider-thumb{
   </div>
 </section>
 
-<!-- ── COMPRA ── -->
+<!-- COMPRA -->
 <section class="page" id="page-compra">
   <div class="hero" style="background:#0b1a12;">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,#071410,#0e2018);"></div>
@@ -707,20 +456,20 @@ input[type=range]::-webkit-slider-thumb{
       <div class="card">
         <div class="slabel" style="margin-bottom:16px;">Perfil del cliente</div>
         <div class="form-grid">
-          <div class="fg"><label>Nombre del cliente</label><input type="text" id="cpnom" placeholder="Ej: Andrés López"/></div>
           <div class="fg"><label>Segmento</label><select id="cpseg"><option value="nuevo">Nuevo — menos de 3 meses</option><option value="activo">Activo recurrente</option><option value="dormido">Dormido — 3 a 12 meses</option><option value="recuperado">Recuperado recientemente</option></select></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Días desde última visita al sitio</label><input type="number" id="cpvis" value="5" min="0" max="365"/></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Páginas vistas última sesión</label><input type="number" id="cppag" value="8" min="0" max="100"/></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Productos en carrito activo</label><input type="number" id="cpcar" value="2" min="0" max="50"/></div>
-          <div class="fg"><label>Valor del carrito actual ($)</label><input type="number" id="cpval" value="120000" min="0"/></div>
         </div>
         <div class="form-grid">
+          <div class="fg"><label>Valor del carrito actual ($)</label><input type="number" id="cpval" value="120000" min="0"/></div>
           <div class="fg"><label>Emails de marketing abiertos (1m)</label><input type="number" id="cpem" value="3" min="0" max="20"/></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Clics en anuncios (último mes)</label><input type="number" id="cpcl" value="2" min="0" max="30"/></div>
+          <div class="fg"><label>Compras realizadas en el último año</label><input type="number" id="cpanio" value="5" min="0" max="100"/></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Historial de compra — frecuencia relativa</span><span class="rv" id="cphis-v">6/10</span></div></label><input type="range" id="cphis" min="1" max="10" value="6" oninput="document.getElementById('cphis-v').textContent=this.value+'/10'"/></div>
@@ -729,8 +478,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fg"><label>Cupón o descuento disponible</label><select id="cpcup"><option value="si">Sí, tiene cupón</option><option value="no">No tiene</option></select></div>
           <div class="fg"><label>Canal de última interacción</label><select id="cpch"><option value="email">Email</option><option value="push">Push notification</option><option value="social">Redes sociales</option><option value="organico">Búsqueda orgánica</option><option value="directo">Directo</option></select></div>
         </div>
-        <div class="form-grid">
-          <div class="fg"><label>Compras realizadas en el último año</label><input type="number" id="cpanio" value="5" min="0" max="100"/></div>
+        <div class="form-grid w1">
           <div class="fg"><label>Temporada actual</label><select id="cptemp"><option value="alta">Alta — Black Friday, Navidad</option><option value="media" selected>Media</option><option value="baja">Baja</option></select></div>
         </div>
         <button class="btn" onclick="runCompra()">Predecir probabilidad de compra</button>
@@ -740,7 +488,7 @@ input[type=range]::-webkit-slider-thumb{
   </div>
 </section>
 
-<!-- ── RECOMPRA ── -->
+<!-- RECOMPRA -->
 <section class="page" id="page-recompra">
   <div class="hero" style="background:#071520;">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,#071520,#0c2030);"></div>
@@ -758,31 +506,31 @@ input[type=range]::-webkit-slider-thumb{
       <div class="card">
         <div class="slabel" style="margin-bottom:16px;">Historial del cliente</div>
         <div class="form-grid">
-          <div class="fg"><label>Nombre del cliente</label><input type="text" id="rnom" placeholder="Ej: Laura Martínez"/></div>
           <div class="fg"><label>Ventana de predicción</label><select id="rven"><option value="30">Próximos 30 días</option><option value="60">Próximos 60 días</option><option value="90">Próximos 90 días</option></select></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Total de compras históricas</label><input type="number" id="rtot" value="18" min="1"/></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Antigüedad del cliente (meses)</label><input type="number" id="rant" value="24" min="1" max="120"/></div>
-        </div>
-        <div class="form-grid">
           <div class="fg"><label>Días promedio entre compras</label><input type="number" id="rciclo" value="32" min="1" max="365"/></div>
-          <div class="fg"><label>Días desde última compra</label><input type="number" id="rult" value="25" min="0" max="365"/></div>
         </div>
         <div class="form-grid">
+          <div class="fg"><label>Días desde última compra</label><input type="number" id="rult" value="25" min="0" max="365"/></div>
           <div class="fg"><label>Gasto total histórico ($)</label><input type="number" id="rgasto" value="1500000" min="0"/></div>
+        </div>
+        <div class="form-grid">
           <div class="fg"><label>Ticket promedio ($)</label><input type="number" id="rtkt" value="83000" min="0"/></div>
+          <div class="fg"><label>Categorías distintas compradas</label><input type="number" id="rcats" value="3" min="1" max="20"/></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Tendencia del gasto (últimos 3 meses)</span><span class="rv" id="rtend-v">Estable</span></div></label><input type="range" id="rtend" min="1" max="5" value="3" oninput="rtlbl(this.value)"/></div>
         </div>
         <div class="form-grid">
-          <div class="fg"><label>Categorías distintas compradas</label><input type="number" id="rcats" value="3" min="1" max="20"/></div>
           <div class="fg"><label>Devoluciones históricas</label><input type="number" id="rdev" value="1" min="0" max="50"/></div>
+          <div class="fg"><label>Programa de lealtad</label><select id="rleal"><option value="si">Inscrito</option><option value="no">No inscrito</option></select></div>
         </div>
         <div class="form-grid">
-          <div class="fg"><label>Programa de lealtad</label><select id="rleal"><option value="si">Inscrito</option><option value="no">No inscrito</option></select></div>
           <div class="fg"><label>Método de pago preferido</label><select id="rpago"><option value="tarjeta">Tarjeta de crédito</option><option value="debito">Tarjeta débito</option><option value="efectivo">Efectivo</option><option value="digital">Wallet digital</option></select></div>
+          <div class="fg"></div>
         </div>
         <div class="form-grid w1">
           <div class="fg"><label><div class="rh"><span>Engagement con comunicaciones</span><span class="rv" id="reng-v">6/10</span></div></label><input type="range" id="reng" min="1" max="10" value="6" oninput="document.getElementById('reng-v').textContent=this.value+'/10'"/></div>
@@ -797,33 +545,6 @@ input[type=range]::-webkit-slider-thumb{
 </main>
 
 <script>
-/* ─── CLIENTS ─── */
-const CLIENTS=[
-  {name:'Demo · Retail S.A.',dot:'#4a72f5',ht:'Demo · Retail S.A.',hd:'Sistema de predicciones activo — 5 modelos disponibles',metrics:[{v:'87%',l:'Accuracy',b:'test set'},{v:'0.91',l:'AUC-ROC',b:'binario'},{v:'12.4k',l:'Registros',b:'entrenamiento'},{v:'9',l:'Variables',b:'features'},{v:'RF',l:'Algoritmo',b:'activo'}]},
-  {name:'Éxito · E-commerce',dot:'#00a86b',ht:'Éxito · E-commerce',hd:'Forecast de ventas activo — XGBoost · 36 meses de histórico',metrics:[{v:'95.8%',l:'Precisión',b:'MAPE 4.2%'},{v:'0.97',l:'R²',b:'regresión'},{v:'36m',l:'Histórico',b:'mensual'},{v:'11',l:'Variables',b:'features'},{v:'XGB',l:'Algoritmo',b:'activo'}]},
-  {name:'Bancolombia · B2B',dot:'#c97f0a',ht:'Bancolombia · B2B',hd:'Lead scoring activo — Logistic Regression · equipo comercial',metrics:[{v:'82%',l:'Accuracy',b:'test set'},{v:'0.88',l:'AUC-ROC',b:'binario'},{v:'8.7k',l:'Leads',b:'entrenamiento'},{v:'12',l:'Variables',b:'features'},{v:'LR',l:'Algoritmo',b:'activo'}]}
-];
-let ac=0;
-
-function pickClient(i,e){
-  e.stopPropagation();ac=i;
-  const c=CLIENTS[i];
-  document.getElementById('cdot').style.background=c.dot;
-  document.getElementById('cname').textContent=c.name;
-  document.getElementById('ht').textContent=c.ht;
-  document.getElementById('hd').textContent=c.hd;
-  document.getElementById('mgrid').innerHTML=c.metrics.map(m=>`<div class="ms"><div class="ms-val">${m.v}</div><div class="ms-lbl">${m.l}</div><div class="ms-badge">${m.b}</div></div>`).join('');
-  document.querySelectorAll('.c-opt').forEach((o,j)=>o.classList.toggle('sel',j===i));
-  toggleDrop();
-}
-
-function toggleDrop(){
-  const p=document.getElementById('cpill'),d=document.getElementById('cdrop');
-  const o=d.classList.toggle('open');
-  p.classList.toggle('open',o);
-}
-document.addEventListener('click',e=>{if(!document.getElementById('cpill').contains(e.target)){document.getElementById('cdrop').classList.remove('open');document.getElementById('cpill').classList.remove('open');}});
-
 function showP(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -832,34 +553,22 @@ function showP(id){
   document.querySelector('.main').scrollTop=0;
 }
 
-/* ─── GAUGE SVG ─── */
 function gauge(pct,color){
   const r=52,half=Math.PI*r,f=half*(pct/100);
   return `<svg width="134" height="78" viewBox="0 0 134 78"><path d="M14 67 A52 52 0 0 1 120 67" fill="none" stroke="#eef0f8" stroke-width="10" stroke-linecap="round"/><path d="M14 67 A52 52 0 0 1 120 67" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${f} ${half}"/></svg>`;
 }
 
-/* ─── FACTOR BARS ─── */
 function fbars(list){
   return list.map(f=>`<div class="fbar"><div class="fb-head"><span class="fb-name">${f.n}</span><span class="fb-pct">${f.p}%</span></div><div class="fb-track"><div class="fb-fill" style="width:${f.p}%;background:${f.c}"></div></div></div>`).join('');
 }
 
-/* ─── REC CARD ─── */
 function recCard(icon,title,desc,tool,priority,priClass){
-  return `<div class="rec">
-    <div class="rec-ic" style="color:var(--ink-3)">${icon}</div>
-    <div class="rec-body">
-      <div class="rec-title">${title}</div>
-      <div class="rec-desc">${desc}${tool?`<span class="rec-tool">${tool}</span>`:''}</div>
-    </div>
-    ${priority?`<div class="rec-pri tag ${priClass}">${priority}</div>`:''}
-  </div>`;
+  return `<div class="rec"><div class="rec-ic" style="color:var(--ink-3)">${icon}</div><div class="rec-body"><div class="rec-title">${title}</div><div class="rec-desc">${desc}${tool?`<span class="rec-tool">${tool}</span>`:''}</div></div>${priority?`<div class="rec-pri tag ${priClass}">${priority}</div>`:''}</div>`;
 }
 
 function icSvg(id,sz=14){return `<svg width="${sz}" height="${sz}"><use href="#${id}"/></svg>`;}
 
-/* ─── CHURN ─── */
 function runChurn(){
-  const nom=document.getElementById('cn').value||'Cliente';
   const freq=document.getElementById('cf').value;
   const mes=+document.getElementById('cm').value;
   const comp=+document.getElementById('cco').value;
@@ -871,14 +580,12 @@ function runChurn(){
   const desc=+document.getElementById('cdesc').value;
   const cats=+document.getElementById('ccats').value;
   const trend=+document.getElementById('ctrend').value;
-
   let s=44+mes*(freq==='baja'?5.2:freq==='media'?4:2.5)+que*7.5-sat*2.8+(fid==='no'?11:0)+(can==='digital'?-4:0)+(tkt>150000?-6:0)+(comp<5?8:comp>30?-7:0)+(desc>5?-4:0)+(cats>2?-5:0)+(trend<60?14:trend>140?-9:0);
   const pct=Math.round(Math.min(96,Math.max(4,s+(Math.random()*6-3))));
   const col=pct>=70?'#e63950':pct>=45?'#c97f0a':'#00a86b';
   const tc=pct>=70?'tg-red':pct>=45?'tg-amber':'tg-green';
   const tl=pct>=70?'Alto riesgo':pct>=45?'Riesgo medio':'Bajo riesgo';
   const ret=Math.max(20,100-pct);
-
   const flist=[
     {n:'Recencia de compra',p:Math.min(100,mes*(freq==='baja'?12:9)),c:'#e63950'},
     {n:'Quejas registradas',p:Math.min(100,que*12),c:'#e63950'},
@@ -887,23 +594,21 @@ function runChurn(){
     {n:'Diversidad de compra',p:cats>2?75:cats==2?50:25,c:'#00a86b'},
     {n:'Tendencia de gasto',p:trend<60?80:trend>140?22:52,c:trend<80?'#e63950':'#00a86b'},
   ];
-
   const recs=pct>=70?`
-    ${recCard(icSvg('ic-bolt'),'Oferta de retención en 48 horas',`Enviar a ${nom} un descuento exclusivo del 20% con caducidad de 48 h para reactivar el ciclo de compra.`,'Klaviyo','Urgente','tg-red')}
-    ${recCard(icSvg('ic-phone'),'Llamada proactiva de satisfacción','Contactar al cliente directamente para identificar el punto de dolor. Clientes con más de 2 quejas responden mejor a llamadas que a emails.','Salesforce','Alta','tg-amber')}
-    ${recCard(icSvg('ic-gift'),'Beneficio especial de retención',`Ofrecer a ${nom} acceso prioritario al programa premium: envío gratis + puntos dobles por 3 meses.`,'HubSpot','Alta','tg-amber')}
+    ${recCard(icSvg('ic-bolt'),'Oferta de retención en 48 horas','Enviar un descuento exclusivo del 20% con caducidad de 48 h para reactivar el ciclo de compra.','Klaviyo','Urgente','tg-red')}
+    ${recCard(icSvg('ic-phone'),'Llamada proactiva de satisfacción','Contactar directamente para identificar el punto de dolor. Clientes con más de 2 quejas responden mejor a llamadas que a emails.','Salesforce','Alta','tg-amber')}
+    ${recCard(icSvg('ic-gift'),'Beneficio especial de retención','Ofrecer acceso prioritario al programa premium: envío gratis + puntos dobles por 3 meses.','HubSpot','Alta','tg-amber')}
   `:pct>=45?`
-    ${recCard(icSvg('ic-mail'),'Secuencia de reactivación por email',`Iniciar flujo de 3 emails en 10 días: recordatorio de producto favorito, novedad de su categoría y oferta suave.`,'ActiveCampaign','Media','tg-amber')}
+    ${recCard(icSvg('ic-mail'),'Secuencia de reactivación por email','Iniciar flujo de 3 emails en 10 días: recordatorio de producto favorito, novedad de su categoría y oferta suave.','ActiveCampaign','Media','tg-amber')}
     ${recCard(icSvg('ic-star'),'Campaña de upselling personalizada','Perfil apto para oferta de producto complementario. Ticket promedio sugiere capacidad de compra adicional.','Braze','Media','tg-amber')}
   `:`
-    ${recCard(icSvg('ic-users'),'Incluir en programa de nurturing mensual',`${nom} está estable. Mantener en flujo de contenido de valor: novedades, tips de uso, lanzamientos.`,'Mailchimp','Normal','tg-green')}
-    ${recCard(icSvg('ic-tag'),'Oportunidad de cross-sell',`Diversidad de compra baja — momento para recomendar categorías aún no exploradas por ${nom}.`,'Shopify','Normal','tg-green')}
+    ${recCard(icSvg('ic-users'),'Incluir en programa de nurturing mensual','Cliente estable. Mantener en flujo de contenido de valor: novedades, tips de uso, lanzamientos.','Mailchimp','Normal','tg-green')}
+    ${recCard(icSvg('ic-tag'),'Oportunidad de cross-sell','Diversidad de compra baja — momento para recomendar categorías aún no exploradas.','Shopify','Normal','tg-green')}
   `;
-
   document.getElementById('churn-res').innerHTML=`
     <div class="card" style="margin-bottom:15px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">${nom}</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Resultado · Random Forest</div></div>
+        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">Perfil evaluado</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Resultado · Random Forest</div></div>
         <span class="tag ${tc}">${tl}</span>
       </div>
       <div class="gauge-wrap">${gauge(pct,col)}<div class="g-num" style="color:${col}">${pct}%</div><div class="g-sub">Probabilidad de churn</div></div>
@@ -915,13 +620,9 @@ function runChurn(){
       <div class="slabel" style="margin-bottom:11px;">Factores del modelo</div>
       ${fbars(flist)}
     </div>
-    <div class="card">
-      <div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>
-      ${recs}
-    </div>`;
+    <div class="card"><div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>${recs}</div>`;
 }
 
-/* ─── VENTAS ─── */
 function runVentas(){
   const tmp=document.getElementById('vtmp').value;
   const act=+document.getElementById('vact').value;
@@ -942,13 +643,11 @@ function runVentas(){
   const maxU=Math.max(...months.map(x=>x.u));
   const stockRisk=inv==='bajo'?'Alto':inv==='medio'?'Medio':'Bajo';
   const stockCol=inv==='bajo'?'var(--red)':inv==='medio'?'var(--amber)':'var(--green)';
-
   const recs=`
     ${recCard(icSvg('ic-box'),'Preparar inventario adicional anticipado',`Se proyectan ${pred.toLocaleString()} unidades. Con inventario ${inv}, gestionar reabastecimiento con al menos 2 semanas de anticipación.`,'Shopify','Alta','tg-amber')}
-    ${recCard(icSvg('ic-bolt'),'Maximizar presupuesto de marketing en el pico',`Con temporada ${tmp} y presupuesto de $${mkt.toLocaleString('es-CO')}, concentrar el 60% del gasto en los primeros 10 días del mes para capturar demanda temprana.`,'Google Ads','Alta','tg-amber')}
-    ${recCard(icSvg('ic-check'),'Activar canales alternativos si el stock es bajo',inv==='bajo'?'Riesgo de quiebre de stock detectado. Priorizar ventas por canales con mayor margen y activar lista de espera.':'Aprovechar la proyección positiva para testear un canal adicional sin riesgo relevante de sobre-inventario.','Klaviyo','Media','tg-blue')}
+    ${recCard(icSvg('ic-bolt'),'Maximizar presupuesto de marketing en el pico',`Con temporada ${tmp} y presupuesto de $${mkt.toLocaleString('es-CO')}, concentrar el 60% del gasto en los primeros 10 días del mes.`,'Google Ads','Alta','tg-amber')}
+    ${recCard(icSvg('ic-check'),'Activar canales alternativos si el stock es bajo',inv==='bajo'?'Riesgo de quiebre de stock detectado. Priorizar ventas por canales con mayor margen y activar lista de espera.':'Aprovechar la proyección positiva para testear un canal adicional.','Klaviyo','Media','tg-blue')}
   `;
-
   document.getElementById('ventas-res').innerHTML=`
     <div class="card" style="margin-bottom:15px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -962,9 +661,7 @@ function runVentas(){
         <div style="font-size:10px;color:var(--muted)">ingresos estimados</div>
       </div>
       <div class="slabel" style="margin-bottom:9px;">Proyección trimestral</div>
-      <div class="fcast">
-        ${months.map(m=>`<div class="fc-col"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="fc-bar" style="width:100%;height:${Math.round(m.u/maxU*100)}%;background:rgba(42,90,245,.35);"></div></div><div class="fc-lbl">${m.m}</div><div class="fc-val">${m.u.toLocaleString()}</div></div>`).join('')}
-      </div>
+      <div class="fcast">${months.map(m=>`<div class="fc-col"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="fc-bar" style="width:100%;height:${Math.round(m.u/maxU*100)}%;background:rgba(42,90,245,.35);"></div></div><div class="fc-lbl">${m.m}</div><div class="fc-val">${m.u.toLocaleString()}</div></div>`).join('')}</div>
       <div class="div"></div>
       <div class="g3">
         <div class="stat" style="padding:11px 13px"><div class="st-val" style="font-size:16px;color:${pro==='si'?'var(--green)':'var(--muted)'}">${pro==='si'?'+18%':'—'}</div><div class="st-lbl">Impacto promoción</div></div>
@@ -972,15 +669,10 @@ function runVentas(){
         <div class="stat" style="padding:11px 13px"><div class="st-val" style="font-size:16px;color:${tmp==='alta'?'var(--green)':tmp==='baja'?'var(--red)':'var(--ink)'}">${tmp==='alta'?'+32%':tmp==='baja'?'-13%':'+6%'}</div><div class="st-lbl">Factor temporada</div></div>
       </div>
     </div>
-    <div class="card">
-      <div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>
-      ${recs}
-    </div>`;
+    <div class="card"><div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>${recs}</div>`;
 }
 
-/* ─── LEADS ─── */
 function runLeads(){
-  const nom=document.getElementById('lnom').value||'Lead';
   const cargo=document.getElementById('lcargo').value;
   const tam=document.getElementById('ltam').value;
   const ind=document.getElementById('lind').value;
@@ -997,7 +689,6 @@ function runLeads(){
   const tc=pct>=70?'tg-red':pct>=45?'tg-amber':'tg-blue';
   const col=pct>=70?'#e63950':pct>=45?'#c97f0a':'#2a5af5';
   const closeTime=pct>=70?'Esta semana':pct>=45?'Próximos 14 días':'30-60 días';
-
   const flist=[
     {n:'Interacción / Engagement',p:itr*10,c:'#2a5af5'},
     {n:'Seniority del contacto',p:cargo==='ceo'?90:cargo==='director'?70:cargo==='gerente'?50:30,c:'#2a5af5'},
@@ -1006,23 +697,21 @@ function runLeads(){
     {n:'Nivel de presupuesto',p:bud==='alto'?88:bud==='medio'?55:22,c:'#2a5af5'},
     {n:'Contenido consumido',p:cont==='demo'?85:cont==='caso'?65:cont==='blog'?40:10,c:'#2a5af5'},
   ];
-
   const recs=pct>=70?`
-    ${recCard(icSvg('ic-bolt'),'Propuesta comercial en las próximas 24 horas',`${nom} muestra todas las señales de cierre. Preparar propuesta con caso de éxito en ${ind} y enviarla antes de que explore competidores.`,'Pipedrive','Urgente','tg-red')}
+    ${recCard(icSvg('ic-bolt'),'Propuesta comercial en las próximas 24 horas','Lead muestra todas las señales de cierre. Preparar propuesta con caso de éxito en el sector y enviarla antes de que explore competidores.','Pipedrive','Urgente','tg-red')}
     ${recCard(icSvg('ic-users'),'Involucrar al director comercial',`Escalar a liderazgo de ventas esta semana. Un contacto de alto nivel acelera el cierre cuando el lead es ${cargo}.`,'Salesforce','Alta','tg-amber')}
-    ${recCard(icSvg('ic-check'),'Confirmar demo técnica con stakeholders',`Si ${nom} es influenciador y no decisor, asegurarse de tener al tomador de decisión en la próxima reunión.`,'Zoom','Alta','tg-amber')}
+    ${recCard(icSvg('ic-check'),'Confirmar demo técnica con stakeholders','Si es influenciador y no decisor, asegurarse de tener al tomador de decisión en la próxima reunión.','Zoom','Alta','tg-amber')}
   `:pct>=45?`
-    ${recCard(icSvg('ic-star'),'Enviar caso de éxito de industria similar',`Compartir un caso documentado de empresa del sector ${ind} que resolvió el mismo problema. El match de industria aumenta la tasa de respuesta 3x.`,'HubSpot','Alta','tg-amber')}
-    ${recCard(icSvg('ic-clock'),'Agendar demo técnica en los próximos 7 días',`${nom} está en evaluación activa. Una demo personalizada en esta ventana mantiene el momentum y evita que el lead enfríe.`,'Calendly','Media','tg-amber')}
+    ${recCard(icSvg('ic-star'),'Enviar caso de éxito de industria similar',`Compartir un caso documentado de empresa del sector ${ind}. El match de industria aumenta la tasa de respuesta 3x.`,'HubSpot','Alta','tg-amber')}
+    ${recCard(icSvg('ic-clock'),'Agendar demo técnica en los próximos 7 días','Lead en evaluación activa. Una demo personalizada en esta ventana mantiene el momentum.','Calendly','Media','tg-amber')}
   `:`
-    ${recCard(icSvg('ic-mail'),'Iniciar secuencia de nurturing educativo',`${nom} no está listo para una propuesta. Activar flujo de 4 semanas: problema → solución → caso → ROI.`,'ActiveCampaign','Media','tg-blue')}
-    ${recCard(icSvg('ic-clock'),'Re-evaluar en 30 días',`Monitorear si el lead descarga contenido de mayor intención (demo, pricing). Ese evento debe disparar reactivación inmediata.`,'HubSpot','Normal','tg-blue')}
+    ${recCard(icSvg('ic-mail'),'Iniciar secuencia de nurturing educativo','Lead no está listo para una propuesta. Activar flujo de 4 semanas: problema → solución → caso → ROI.','ActiveCampaign','Media','tg-blue')}
+    ${recCard(icSvg('ic-clock'),'Re-evaluar en 30 días','Monitorear si el lead descarga contenido de mayor intención (demo, pricing). Ese evento debe disparar reactivación inmediata.','HubSpot','Normal','tg-blue')}
   `;
-
   document.getElementById('leads-res').innerHTML=`
     <div class="card" style="margin-bottom:15px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">${nom}</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">${ind} · ${tam}</div></div>
+        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">Perfil evaluado</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">${ind} · ${tam}</div></div>
         <span class="tag ${tc}">${tier}</span>
       </div>
       <div class="gauge-wrap">${gauge(pct,col)}<div class="g-num" style="color:${col}">${pct}%</div><div class="g-sub">Probabilidad de cierre</div></div>
@@ -1035,15 +724,10 @@ function runLeads(){
       <div class="slabel" style="margin-bottom:11px;">Desglose del score</div>
       ${fbars(flist)}
     </div>
-    <div class="card">
-      <div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>
-      ${recs}
-    </div>`;
+    <div class="card"><div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>${recs}</div>`;
 }
 
-/* ─── COMPRA ─── */
 function runCompra(){
-  const nom=document.getElementById('cpnom').value||'Cliente';
   const seg=document.getElementById('cpseg').value;
   const vis=+document.getElementById('cpvis').value;
   const pag=+document.getElementById('cppag').value;
@@ -1062,7 +746,6 @@ function runCompra(){
   const tc=pct>=65?'tg-green':pct>=40?'tg-amber':'tg-red';
   const tl=pct>=65?'Alta probabilidad':pct>=40?'Probabilidad media':'Baja probabilidad';
   const w7=Math.round(pct*.65),w30=Math.round(pct*.9);
-
   const flist=[
     {n:'Actividad reciente en el sitio',p:Math.min(100,pag*8+Math.max(0,20-vis)*2),c:'#00a86b'},
     {n:'Carrito activo',p:Math.min(100,car*20),c:'#00a86b'},
@@ -1071,23 +754,21 @@ function runCompra(){
     {n:'Segmento del cliente',p:seg==='activo'?80:seg==='recuperado'?55:seg==='nuevo'?35:20,c:'#00a86b'},
     {n:'Incentivo disponible',p:cup==='si'?75:20,c:'#00a86b'},
   ];
-
   const recs=pct>=65?`
-    ${recCard(icSvg('ic-bolt'),'Activar push de carrito abandonado inmediatamente',`${nom} tiene ${car} producto${car>1?'s':''} en carrito y visitó el sitio hace ${vis} días. Cada día de espera reduce la conversión un 15%.`,'Klaviyo','Urgente','tg-red')}
-    ${recCard(icSvg('ic-gift'),'Email con urgencia y escasez',`Si el cupón está disponible, incluirlo con un contador de tiempo de 24 horas. Aumenta la tasa de cierre hasta un 40%.`,'Braze','Alta','tg-amber')}
-    ${recCard(icSvg('ic-users'),'Activar chat proactivo en la próxima visita','Configurar trigger de chat cuando ${nom} abra el sitio. Un agente o bot en ese momento convierte 3x más que un email posterior.','Intercom','Media','tg-blue')}
+    ${recCard(icSvg('ic-bolt'),'Activar push de carrito abandonado inmediatamente',`Cliente con ${car} producto${car>1?'s':''} en carrito. Visitó el sitio hace ${vis} días. Cada día de espera reduce la conversión un 15%.`,'Klaviyo','Urgente','tg-red')}
+    ${recCard(icSvg('ic-gift'),'Email con urgencia y escasez','Si el cupón está disponible, incluirlo con un contador de tiempo de 24 horas. Aumenta la tasa de cierre hasta un 40%.','Braze','Alta','tg-amber')}
+    ${recCard(icSvg('ic-users'),'Activar chat proactivo en la próxima visita','Configurar trigger de chat. Un agente o bot en ese momento convierte 3x más que un email posterior.','Intercom','Media','tg-blue')}
   `:pct>=40?`
-    ${recCard(icSvg('ic-tag'),'Ofrecer cupón de conversión estratégico',`Un descuento del 10-15% en este momento tiene alta probabilidad de cerrar la venta. Priorizar si el margen lo permite.`,'Shopify','Alta','tg-amber')}
-    ${recCard(icSvg('ic-bolt'),'Retargeting en el canal de mayor interacción',`El último contacto fue por ${ch}. Activar anuncio de retargeting exactamente en ese canal con el producto visto.`,'Meta Ads','Media','tg-amber')}
+    ${recCard(icSvg('ic-tag'),'Ofrecer cupón de conversión estratégico','Un descuento del 10-15% tiene alta probabilidad de cerrar la venta. Priorizar si el margen lo permite.','Shopify','Alta','tg-amber')}
+    ${recCard(icSvg('ic-bolt'),'Retargeting en el canal de mayor interacción',`Último contacto fue por ${ch}. Activar anuncio de retargeting en ese canal con el producto visto.`,'Meta Ads','Media','tg-amber')}
   `:`
-    ${recCard(icSvg('ic-mail'),'Secuencia de educación del producto',`${nom} necesita más contexto antes de comprar. Enviar 3 emails en 2 semanas: beneficios → comparativa → testimonio.`,'Mailchimp','Media','tg-blue')}
+    ${recCard(icSvg('ic-mail'),'Secuencia de educación del producto','Cliente necesita más contexto. Enviar 3 emails en 2 semanas: beneficios → comparativa → testimonio.','Mailchimp','Media','tg-blue')}
     ${recCard(icSvg('ic-clock'),'Monitorear y re-evaluar en 14 días','No activar descuentos todavía — reducen el margen sin garantía de conversión cuando la intención es baja.','Amplitude','Normal','tg-blue')}
   `;
-
   document.getElementById('compra-res').innerHTML=`
     <div class="card" style="margin-bottom:15px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">${nom}</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Segmento: ${seg} · GBM</div></div>
+        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">Perfil evaluado</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Segmento: ${seg} · GBM</div></div>
         <span class="tag ${tc}">${tl}</span>
       </div>
       <div class="gauge-wrap">${gauge(pct,col)}<div class="g-num" style="color:${col}">${pct}%</div><div class="g-sub">Probabilidad de compra</div></div>
@@ -1099,17 +780,12 @@ function runCompra(){
       <div class="slabel" style="margin-bottom:11px;">Señales de intención</div>
       ${fbars(flist)}
     </div>
-    <div class="card">
-      <div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>
-      ${recs}
-    </div>`;
+    <div class="card"><div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>${recs}</div>`;
 }
 
-/* ─── RECOMPRA ─── */
 function rtlbl(v){const l=['','En declive fuerte','En declive leve','Estable','Creciendo','Crecimiento fuerte'];document.getElementById('rtend-v').textContent=l[v]||'Estable';}
 
 function runRecompra(){
-  const nom=document.getElementById('rnom').value||'Cliente';
   const ven=+document.getElementById('rven').value;
   const tot=+document.getElementById('rtot').value;
   const ant=+document.getElementById('rant').value;
@@ -1130,7 +806,6 @@ function runRecompra(){
   const tl=pct>=65?'Alta recompra':pct>=40?'Recompra probable':'Recompra improbable';
   const ltv=Math.round(gasto/Math.max(ant,1)*12);
   const diasRestantes=Math.max(0,ciclo-ult);
-
   const flist=[
     {n:`Posición en ciclo (${ult}/${ciclo} días)`,p:Math.min(100,Math.max(0,(ciclo-ult)/ciclo*100)),c:'#0093a8'},
     {n:'Frecuencia histórica',p:Math.min(100,tot*3.5),c:'#0093a8'},
@@ -1139,23 +814,21 @@ function runRecompra(){
     {n:'Programa de lealtad',p:leal==='si'?80:20,c:'#0093a8'},
     {n:'Diversidad de compra',p:Math.min(100,cats*20),c:'#0093a8'},
   ];
-
   const recs=pct>=65?`
-    ${recCard(icSvg('ic-bolt'),`Recordatorio anticipado — ${diasRestantes} días antes del ciclo`,`${nom} suele comprar cada ${ciclo} días. Enviar recordatorio personalizado con los productos de su historial ${diasRestantes} días antes.`,'Klaviyo','Alta','tg-teal')}
-    ${recCard(icSvg('ic-star'),'Bundle o pack complementario',`Con ${cats} categorías compradas, hay espacio para un bundle estratégico. Aumenta el ticket promedio y refuerza el hábito de recompra.`,'Shopify','Media','tg-amber')}
-    ${recCard(icSvg('ic-gift'),'Puntos o beneficio de lealtad por recompra oportuna','Ofrecer puntos dobles o envío gratis si la compra se realiza dentro del período esperado. Refuerza el ciclo sin costo directo alto.','Yotpo','Media','tg-amber')}
+    ${recCard(icSvg('ic-bolt'),`Recordatorio anticipado — ${diasRestantes} días antes del ciclo`,`Cliente suele comprar cada ${ciclo} días. Enviar recordatorio personalizado con los productos de su historial ${diasRestantes} días antes.`,'Klaviyo','Alta','tg-teal')}
+    ${recCard(icSvg('ic-star'),'Bundle o pack complementario',`Con ${cats} categorías compradas, hay espacio para un bundle estratégico que aumente el ticket promedio.`,'Shopify','Media','tg-amber')}
+    ${recCard(icSvg('ic-gift'),'Puntos o beneficio de lealtad por recompra oportuna','Ofrecer puntos dobles o envío gratis si la compra se realiza dentro del período esperado.','Yotpo','Media','tg-amber')}
   `:pct>=40?`
-    ${recCard(icSvg('ic-mail'),'Campaña de reactivación con producto personalizado',`${nom} está en zona de riesgo. Enviar selección curada basada en su historial, sin presionar directamente una venta.`,'Braze','Alta','tg-amber')}
-    ${recCard(icSvg('ic-tag'),'Incentivo de recompra moderado',`Descuento del 10% en su próxima compra enviado como "beneficio exclusivo". Evitar descuentos altos que erosionen el margen.`,'Mailchimp','Media','tg-amber')}
+    ${recCard(icSvg('ic-mail'),'Campaña de reactivación con producto personalizado','Cliente en zona de riesgo. Enviar selección curada basada en su historial, sin presionar directamente una venta.','Braze','Alta','tg-amber')}
+    ${recCard(icSvg('ic-tag'),'Incentivo de recompra moderado','Descuento del 10% en próxima compra enviado como "beneficio exclusivo". Evitar descuentos altos que erosionen el margen.','Mailchimp','Media','tg-amber')}
   `:`
-    ${recCard(icSvg('ic-alert'),'Activar protocolo de retención urgente',`${nom} muestra señales de abandono — tendencia de gasto en declive y baja recompra proyectada. Priorizar intervención directa.`,'Salesforce','Urgente','tg-red')}
-    ${recCard(icSvg('ic-gift'),'Incentivo de recuperación agresivo',`Ofrecer descuento del 25-30% por tiempo limitado. Calcular el valor vs el costo de adquisición de un cliente nuevo para justificar el margen.`,'Klaviyo','Alta','tg-red')}
+    ${recCard(icSvg('ic-alert'),'Activar protocolo de retención urgente','Señales de abandono detectadas — tendencia de gasto en declive y baja recompra proyectada. Priorizar intervención directa.','Salesforce','Urgente','tg-red')}
+    ${recCard(icSvg('ic-gift'),'Incentivo de recuperación agresivo','Ofrecer descuento del 25-30% por tiempo limitado. Calcular el valor vs el costo de adquisición de un cliente nuevo.','Klaviyo','Alta','tg-red')}
   `;
-
   document.getElementById('recompra-res').innerHTML=`
     <div class="card" style="margin-bottom:15px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">${nom}</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Ventana: ${ven} días · Neural Net</div></div>
+        <div><div style="font-size:15px;font-weight:800;letter-spacing:-.3px">Perfil evaluado</div><div style="font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:500">Ventana: ${ven} días · Neural Net</div></div>
         <span class="tag ${tc}">${tl}</span>
       </div>
       <div class="gauge-wrap">${gauge(pct,col)}<div class="g-num" style="color:${col}">${pct}%</div><div class="g-sub">Probabilidad de recompra en ${ven} días</div></div>
@@ -1168,10 +841,7 @@ function runRecompra(){
       <div class="slabel" style="margin-bottom:11px;">Factores de recompra</div>
       ${fbars(flist)}
     </div>
-    <div class="card">
-      <div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>
-      ${recs}
-    </div>`;
+    <div class="card"><div class="slabel" style="margin-bottom:12px;">Acciones recomendadas</div>${recs}</div>`;
 }
 </script>
 </body>
